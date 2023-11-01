@@ -16,13 +16,21 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <div>
-        <button v-if="as == 'button'" :class="classes" class="w-full text-start">
-            <slot />
-        </button>
+  <div>
+    <button
+      v-if="as == 'button'"
+      :class="classes"
+      class="w-full text-start"
+    >
+      <slot />
+    </button>
 
-        <Link v-else :href="href" :class="classes">
-            <slot />
-        </Link>
-    </div>
+    <Link
+      v-else
+      :href="href"
+      :class="classes"
+    >
+      <slot />
+    </Link>
+  </div>
 </template>
