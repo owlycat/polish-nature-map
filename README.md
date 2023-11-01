@@ -16,4 +16,21 @@ This web application allows users to track visited national parks and other prot
 - [Inertia.js](https://inertiajs.com/)
 
 ## Development
-The project is being developed by using [Laravel Sail](https://laravel.com/docs/10.x/sail) using WSL2 Docker environment.
+The project is being developed with [Laravel Sail](https://laravel.com/docs/10.x/sail) in the WSL2 Docker environment.
+
+### Setting Up the Development Environment
+1. Run setup script for Sail: `sh setup.sh`
+2. Create Docker containers: `./vendor/bin/sail up -d`
+3. Generate application key: `./vendor/bin/sail artisan key:generate`
+4. Create storage link: `./vendor/bin/sail artisan storage:link`
+5. Run migrations: `./vendor/bin/sail artisan migrate:fresh`
+6. Install frontend dependencies: `./vendor/bin/sail npm install`
+7. Run application: `./vendor/bin/sail npm run dev`
+
+### Configuring Sail alias
+To make it easier to run Sail commands, you can add an alias to your shell configuration file:
+```bash
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+```
+
+To make sure this is always available, you may add this to your shell configuration file in your home directory. For example, in `~/.bashrc` or `~/.zshrc`.
