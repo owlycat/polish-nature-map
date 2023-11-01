@@ -23,7 +23,8 @@ The project is being developed by using [Laravel Sail](https://laravel.com/docs/
 2. Create Docker containers: `./vendor/bin/sail up -d`
 3. Install dependencies: `./vendor/bin/sail composer install`
 4. Generate application key: `./vendor/bin/sail artisan key:generate`
-5. Run migrations: `./vendor/bin/sail artisan migrate`
+5. Create storage link: `./vendor/bin/sail artisan storage:link`
+6. Run migrations: `./vendor/bin/sail artisan migrate`
 
 ### Configuring Sail alias
 To make it easier to run Sail commands, you can add an alias to your shell configuration file:
