@@ -10,7 +10,7 @@ return [
         Providers::github(),
     ],
     'features' => [
-        // Features::createAccountOnFirstLogin(),
+        Features::createAccountOnFirstLogin(),
         // Features::generateMissingEmails(),
         Features::rememberSession(),
         Features::providerAvatars(),
