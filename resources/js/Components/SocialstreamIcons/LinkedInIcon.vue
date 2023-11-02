@@ -1,3 +1,7 @@
+<script>
+export default {};
+</script>
+
 <template>
   <svg
     aria-hidden="true"
@@ -11,7 +15,3 @@
     />
   </svg>
 </template>
-
-<script>
-export default {};
-</script>

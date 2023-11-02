@@ -1,3 +1,7 @@
+<script>
+export default {};
+</script>
+
 <template>
   <svg
     viewBox="0 0 24 24"
@@ -48,7 +52,3 @@
     </g>
   </svg>
 </template>
-
-<script>
-export default {};
-</script>

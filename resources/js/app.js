@@ -1,7 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
-import "primevue/resources/themes/lara-light-blue/theme.css";
-import "primeicons/primeicons.css";
+import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primeicons/primeicons.css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -18,7 +18,7 @@ createInertiaApp({
     resolve: (name) => {
         const page = resolvePageComponent(
           `./Pages/${name}.vue`,
-          import.meta.glob("./Pages/**/*.vue"),
+          import.meta.glob('./Pages/**/*.vue'),
         )
     
         page.then((module) => {
