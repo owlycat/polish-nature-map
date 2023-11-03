@@ -186,6 +186,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'CRS' => App\Helpers\Facades\CoordinateReferenceSystemFacade::class,
+        'PointCentroid' => App\Helpers\Facades\PointCentroidFacade::class,
     ])->toArray(),
 
 ];
