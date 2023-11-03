@@ -174,7 +174,7 @@ const endMenuItems = computed(() => [
 
       <button
         v-if="item.command"
-        class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+        class="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
         @click="handleMenuItemClick(item)"
       >
         <div class="flex gap-3 items-center">
