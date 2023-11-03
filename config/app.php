@@ -185,7 +185,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'CRS' => App\Helpers\Facades\CoordinateReferenceSystemFacade::class,
     ])->toArray(),
 
 ];
