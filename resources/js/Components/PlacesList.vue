@@ -2,15 +2,10 @@
 import Card from 'primevue/card';
 </script>
 <template>
-  <div class="bg-white rounded border max-w-md w-full flex flex-col h-full">
+  <div class="bg-white rounded border md:max-w-md w-full flex flex-col h-full">
     <Card class="sticky top-0 z-10">
       <template #title>
-        Search
-      </template>
-      <template #content>
-        <p class="m-0">
-          test
-        </p>
+        (( Search component ))
       </template>
     </Card>
     <div class="overflow-y-auto flex-grow max-h-fit">
@@ -25,7 +20,7 @@ import Card from 'primevue/card';
     </div>
     <Card class="sticky bottom-0 z-10">
       <template #title>
-        next page, previous page
+        (( Pagination component ))
       </template>
     </Card>
   </div>
