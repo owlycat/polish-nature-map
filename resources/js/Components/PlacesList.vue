@@ -3,7 +3,7 @@ import Card from 'primevue/card';
 </script>
 <template>
   <div class="bg-white rounded border max-w-md w-full flex flex-col h-full">
-    <Card class="sticky top-0 z-20">
+    <Card class="sticky top-0 z-10">
       <template #title>
         Search
       </template>
@@ -23,7 +23,7 @@ import Card from 'primevue/card';
         </li>
       </ul>
     </div>
-    <Card class="sticky bottom-0 z-20">
+    <Card class="sticky bottom-0 z-10">
       <template #title>
         next page, previous page
       </template>

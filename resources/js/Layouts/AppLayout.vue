@@ -13,7 +13,7 @@ defineProps({
   <Toast position="bottom-right" />
 
   <div class="flex flex-col h-screen">
-    <div class="sticky top-0 z-20 bg-blue-300">
+    <div class="sticky top-0 z-20">
       <NavigationBar />
     </div>
     <div class="flex flex-col overflow-y-auto">
