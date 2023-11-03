@@ -16,47 +16,47 @@ const rightItems = computed(() =>
 
 const endMenuItems = computed(() => [
     {
-        label: "User options",
+        label: 'User options',
         items: [
             {
-                label: "Main page",
-                icon: "pi pi-user",
-                justify: "start",
+                label: 'Main page',
+                icon: 'pi pi-user',
+                justify: 'start',
                 visible: user.value !== null,
-                disabled: route().current("index"),
-                route: "/",
+                disabled: route().current('index'),
+                route: '/',
             },
             {
-                label: "Admin Panel",
-                icon: "pi pi-user-edit",
-                justify: "start",
+                label: 'Admin Panel',
+                icon: 'pi pi-user-edit',
+                justify: 'start',
                 visible: user.value !== null,
-                disabled: route().current("admin"),
-                route: "/admin",
+                disabled: route().current('admin'),
+                route: '/admin',
             },
             {
-                label: "Log In",
-                icon: "pi pi-sign-in",
-                justify: "end",
+                label: 'Log In',
+                icon: 'pi pi-sign-in',
+                justify: 'end',
                 visible: user.value == null,
-                disabled: route().current("login"),
-                route: "/login",
+                disabled: route().current('login'),
+                route: '/login',
             },
             {
-                label: "Settings",
-                icon: "pi pi-user-edit",
-                justify: "end",
+                label: 'Settings',
+                icon: 'pi pi-user-edit',
+                justify: 'end',
                 visible: user.value !== null,
-                disabled: route().current("profile.show"),
-                route: "/user/profile",
+                disabled: route().current('profile.show'),
+                route: '/user/profile',
             },
             {
-                label: "Log Out",
-                icon: "pi pi-sign-out",
-                justify: "end",
+                label: 'Log Out',
+                icon: 'pi pi-sign-out',
+                justify: 'end',
                 visible: user.value !== null,
                 command: () => {
-                    router.post(route("logout"));
+                    router.post(route('logout'));
                     toast.add({severity: 'success', detail: 'Logged out successfully'});
                 },
             },
@@ -66,52 +66,58 @@ const endMenuItems = computed(() => [
 </script>
 
 <template>
-    <nav class="flex justify-between items-center bg-gray-800 text-white p-4">
-        <div class="flex space-x-4">
-            <!-- Left-aligned items -->
-            <template v-for="item in leftItems" :key="item.label">
-                <button
-                    v-if="item.visible && item.command"
-                    :disabled="item.disabled"
-                    @click="item.command"
-                    class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-                >
-                    <i :class="item.icon"></i>
-                    <span class="ml-2">{{ item.label }}</span>
-                </button>
-                <Link
-                    v-else-if="item.visible"
-                    :href="item.route"
-                    :class="{'opacity-50': item.disabled}"
-                    class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-                >
-                    <i :class="item.icon"></i>
-                    <span class="ml-2">{{ item.label }}</span>
-                </Link>
-            </template>
-        </div>
-        <div class="flex space-x-4">
-            <!-- Right-aligned items -->
-            <template v-for="item in rightItems" :key="item.label">
-                <button
-                    v-if="item.visible && item.command"
-                    :disabled="item.disabled"
-                    @click="item.command"
-                    class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-                >
-                    <i :class="item.icon"></i>
-                    <span class="ml-2">{{ item.label }}</span>
-                </button>
-                <Link
-                    v-else-if="item.visible"
-                    :href="item.route"
-                    :class="{'opacity-50': item.disabled}"
-                    class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-                >
-                    <i :class="item.icon"></i>
-                    <span class="ml-2">{{ item.label }}</span>
-                </Link>
-            </template>
-        </div>
-    </nav>
+  <nav class="flex justify-between items-center bg-gray-800 text-white p-4">
+    <div class="flex space-x-4">
+      <!-- Left-aligned items -->
+      <template
+        v-for="item in leftItems"
+        :key="item.label"
+      >
+        <button
+          v-if="item.visible && item.command"
+          :disabled="item.disabled"
+          class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+          @click="item.command"
+        >
+          <i :class="item.icon" />
+          <span class="ml-2">{{ item.label }}</span>
+        </button>
+        <Link
+          v-else-if="item.visible"
+          :href="item.route"
+          :class="{'opacity-50': item.disabled}"
+          class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+        >
+          <i :class="item.icon" />
+          <span class="ml-2">{{ item.label }}</span>
+        </Link>
+      </template>
+    </div>
+    <div class="flex space-x-4">
+      <!-- Right-aligned items -->
+      <template
+        v-for="item in rightItems"
+        :key="item.label"
+      >
+        <button
+          v-if="item.visible && item.command"
+          :disabled="item.disabled"
+          class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+          @click="item.command"
+        >
+          <i :class="item.icon" />
+          <span class="ml-2">{{ item.label }}</span>
+        </button>
+        <Link
+          v-else-if="item.visible"
+          :href="item.route"
+          :class="{'opacity-50': item.disabled}"
+          class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+        >
+          <i :class="item.icon" />
+          <span class="ml-2">{{ item.label }}</span>
+        </Link>
+      </template>
+    </div>
+  </nav>
 </template>
