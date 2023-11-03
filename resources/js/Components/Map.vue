@@ -1,6 +1,6 @@
 <script setup>
 import { ref , onMounted, onBeforeUnmount} from 'vue';
-import "maplibre-gl/dist/maplibre-gl.css";
+import 'maplibre-gl/dist/maplibre-gl.css';
 import maplibregl from 'maplibre-gl';
 
 const mapContainer = ref(null);
@@ -27,7 +27,7 @@ onMounted(() => {
     map.value.addControl(new maplibregl.GeolocateControl())
     map.value.addControl(new maplibregl.LogoControl())
 
-    map.value.on("idle", function () {
+    map.value.on('idle', function () {
         map.value.resize()
     })
 
@@ -49,9 +49,9 @@ onBeforeUnmount(() => {
 });
 </script>
 <template>
-    <div
-        ref="mapContainer"
-        class="h-full w-full"
-    />
+  <div
+    ref="mapContainer"
+    class="h-full w-full"
+  />
 </template>
 
