@@ -1,16 +1,40 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import Button from 'primevue/button';
+import PlacesList from '@/Components/PlacesList.vue';
+import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
+import Map from '@/Components/Map.vue';
 
 const toast = useToast();
+const isListVisible = ref(true);
+
+const toggleListVisibility = () => {
+    isListVisible.value = !isListVisible.value;
+};
 </script>
 
 <template>
   <Head title="Welcome" />
-  <Button
-    label="Toast"
-    @click="toast.add({severity: 'info', summary: 'Info', detail: 'Toast test'})"
-  />
+  <div class="flex-grow overflow-y-auto h-screen flex md:flex-row flex-col-reverse">
+    <div :class="isListVisible ? 'h-1/2 md:h-full relative' : 'h-0'">
+      <PlacesList v-show="isListVisible" />
+      <button
+        v-show="isListVisible"
+        class="absolute top-0 right-0 m-4 md:hidden z-20"
+        @click="toggleListVisibility"
+      >
+        Hide List
+      </button>
+    </div>
+    <div :class="isListVisible ? 'w-full h-1/2 md:h-full' : 'w-full h-full'">
+      <Map />
+    </div>
+    <button
+      v-show="!isListVisible"
+      class="fixed bottom-0 right-0 m-4 md:hidden"
+      @click="toggleListVisibility"
+    >
+      Show List
+    </button>
+  </div>
 </template>
-
