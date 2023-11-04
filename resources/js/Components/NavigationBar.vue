@@ -82,7 +82,9 @@ const endMenuItems = computed(() => [
 <template>
   <nav class="flex justify-between items-center bg-primary text-white p-4 z-50">
     <div class="flex gap-10 pl-10 items-center">
-      <i class="pi pi-map" />
+      <Link :href="'/'">
+        <i class="pi pi-map" />
+      </Link>
       <div class="hidden md:flex md:gap-3">
         <template
           v-for="item in leftItems"
