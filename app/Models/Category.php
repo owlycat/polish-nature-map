@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\MapFeature;
+use App\Models\SpatialFeature;
 
 class Category extends Model
 {
@@ -15,8 +15,13 @@ class Category extends Model
         "name",
     ];
 
-    public function mapFeatures(): HasMany
+    public function spatialFeatures(): HasMany
     {
-        return $this->HasMany(MapFeature::class);
+        return $this->HasMany(SpatialFeature::class);
+    }
+
+    public static function createCategoryIfNotExists($name): Category
+    {
+        return self::firstOrCreate(['name' => $name]);
     }
 }

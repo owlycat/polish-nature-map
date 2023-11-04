@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\MapFeature;
-
 return [
 
     'driver' => env('SCOUT_DRIVER', 'meilisearch'),

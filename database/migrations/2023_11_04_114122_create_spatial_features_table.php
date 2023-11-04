@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('map_features', function (Blueprint $table) {
+        Schema::create('spatial_features', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->json('_geo');
-            $table->foreignId('category_id')->constrained();
+            $table->string("name");
+            $table->json("_geo");
+            $table->foreignId("category_id")->constrained();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('map_features');
+        Schema::dropIfExists('spatial_features');
     }
 };

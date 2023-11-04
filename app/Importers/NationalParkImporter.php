@@ -2,20 +2,20 @@
 
 namespace App\Importers;
 
-use App\Importers\MapFeaturesImporter;
+use App\Importers\SpatialFeaturesImporter;
 
 use App\Helpers\Facades\GeojsonFeatureFacade;
 use App\DataSources\GDOSDataSource;
 use GeojsonFeature;
 
-class NationalParkImporter extends MapFeaturesImporter {
+class NationalParkImporter extends SpatialFeaturesImporter {
     protected string $categoryName = "national_park";
 
     public function __construct() {
         parent::__construct($this->categoryName);
     }
 
-    public function run(): array {
+    public function getFeatures(): array {
         $dataSource = new GDOSDataSource();
 
         $features = $dataSource->getData([ "typeName" => "GDOS:ParkiNarodowe" ]);

@@ -2,7 +2,7 @@
 
 namespace App\DataSources;
 
-class DataSource {
+abstract class DataSource {
     protected string $name;
 
     protected function __construct(string $name) {
@@ -13,7 +13,5 @@ class DataSource {
         return $this->name;
     }
 
-    public function getData(mixed $data = null): array {
-        return [];
-    }
+    public function getData(mixed $data = null): array;
 }

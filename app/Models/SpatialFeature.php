@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Category;
 use Laravel\Scout\Searchable;
 
-class MapFeature extends Model
+class SpatialFeature extends Model
 {
     use HasFactory;
     use Searchable;
