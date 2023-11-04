@@ -1,11 +1,14 @@
 <script setup>
-import { ref , onMounted, onBeforeUnmount} from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount} from 'vue';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import maplibregl from 'maplibre-gl';
+import { usePage } from '@inertiajs/vue3'
 
+const page = usePage();
 const mapContainer = ref(null);
 const map = ref(null);
 
+const geojson = computed(() => page.props.placeholderGeojson)
 onMounted(() => {
     map.value = new maplibregl.Map({
         container: mapContainer.value,
@@ -27,11 +30,30 @@ onMounted(() => {
     map.value.addControl(new maplibregl.GeolocateControl())
     map.value.addControl(new maplibregl.LogoControl())
 
+    map.value.on('load', function () {
+        map.value.loadImage('./images/park-marker.png', async function(error, image){
+            if (error) throw error;
+            map.value.addImage('park', image);
+
+        });
+        map.value.addSource('parks', {
+            'type': 'geojson',
+            'data': geojson.value,
+            });
+        map.value.addLayer({
+            'id': 'parks',
+            'type': 'symbol',
+            'source': 'parks',
+            'layout': {
+                'icon-image': 'park',
+                'icon-size': 0.06
+            }
+        });
+    });
+
     map.value.on('idle', function () {
         map.value.resize()
     })
-
-    addMarker();
 });
 
 const destroyMap = () => {

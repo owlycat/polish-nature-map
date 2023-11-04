@@ -5,10 +5,13 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Helpers\CoordinateReferenceSystemHelper;
 use App\Helpers\PointCentroidHelper;
+use App\Helpers\GeojsonFeatureHelper;
 use App\Helpers\Facades\CoordinateReferenceSystemFacade;
 use App\Helpers\Facades\PointCentroidFacade;
+use App\Helpers\Facades\GeojsonFeatureFacade;
 use Illuminate\Support\Facades\Validator;
 use App\Rules\GeometryRule;
+use Illuminate\Support\Facades\Http;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PointCentroidFacade::class, function(){
             return new PointCentroidHelper();
         });
+
+        $this->app->bind(GeojsonFeatureFacade::class, function(){
+            return new GeojsonFeatureHelper();
+        });
     }
 
     /**
@@ -31,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Http::globalRequestMiddleware(fn ($request) => $request->withHeader(
+            'User-Agent', config('app.name') . '/' . config('app.version', '1.0.0'),
+        ));
     }
 }
