@@ -117,7 +117,7 @@ const endMenuItems = computed(() => [
 
     <div class="flex gap-3 pr-10 items-center">
       <button
-        class="text-white focus:outline-none md:hidden"
+        class="w-12 h-12 flex items-center justify-center rounded-md hover:bg-highlight-text-color text-white focus:outline-none md:hidden"
         @click="mobileMenuOpen = !mobileMenuOpen"
       >
         <i class="pi pi-bars" />
