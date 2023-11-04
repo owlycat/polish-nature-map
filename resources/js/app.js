@@ -1,6 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
-import 'primevue/resources/themes/lara-light-blue/theme.css';
+import 'primevue/resources/themes/lara-light-teal/theme.css';
 import 'primeicons/primeicons.css';
 
 import { createApp, h } from 'vue';
@@ -17,14 +17,14 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => {
         const page = resolvePageComponent(
-          `./Pages/${name}.vue`,
-          import.meta.glob('./Pages/**/*.vue'),
+            `./Pages/${name}.vue`,
+            import.meta.glob('./Pages/**/*.vue'),
         )
-    
+
         page.then((module) => {
-          module.default.layout = module.default.layout || AppLayout
+            module.default.layout = module.default.layout || AppLayout
         })
-    
+
         return page
     },
     setup({ el, App, props, plugin }) {
