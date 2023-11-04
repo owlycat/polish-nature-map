@@ -14,7 +14,7 @@ const toggleListVisibility = () => {
 <template>
   <Head title="Welcome" />
   <div class="flex-grow overflow-y-auto h-screen flex md:flex-row flex-col-reverse">
-    <div :class="isListVisible ? 'h-1/2 md:h-full relative' : 'h-0'">
+    <div :class="isListVisible ? 'h-3/5 md:h-full relative' : 'h-0'">
       <PlacesList v-show="isListVisible" />
       <button
         v-show="isListVisible"
@@ -24,7 +24,7 @@ const toggleListVisibility = () => {
         Hide List
       </button>
     </div>
-    <div :class="isListVisible ? 'w-full h-1/2 md:h-full' : 'w-full h-full'">
+    <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
       <Map />
     </div>
     <button
