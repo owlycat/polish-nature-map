@@ -4,7 +4,7 @@ import Toast from 'primevue/toast';
 import NavigationBar from '@/Components/NavigationBar.vue';
 
 defineProps({
-    title: String,
+  title: String,
 });
 </script>
 
@@ -13,9 +13,7 @@ defineProps({
   <Toast position="bottom-right" />
 
   <div class="flex flex-col h-screen">
-    <div class="sticky top-0 z-20">
-      <NavigationBar />
-    </div>
+    <NavigationBar />
     <div class="flex flex-col overflow-y-auto">
       <slot />
     </div>
