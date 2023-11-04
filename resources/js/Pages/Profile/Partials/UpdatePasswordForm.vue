@@ -3,10 +3,8 @@ import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -48,60 +46,58 @@ const updatePassword = () => {
     </template>
 
     <template #form>
+      <!-- Current Password -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel
-          for="current_password"
-          value="Current Password"
-        />
-        <TextInput
-          id="current_password"
-          ref="currentPasswordInput"
-          v-model="form.current_password"
-          type="password"
-          class="mt-1 block w-full"
-          autocomplete="current-password"
-        />
-        <InputError
-          :message="form.errors.current_password"
-          class="mt-2"
-        />
+        <div class="flex flex-col gap-2">
+          <label for="current_password">Current Password</label>
+          <InputText
+            id="current_password"
+            ref="currentPasswordInput"
+            v-model="form.current_password"
+            placeholder="Current Password"
+            :class="{ 'p-invalid': form.errors.current_password }"
+            type="password"
+            autocomplete="current-password"
+            required
+            @input="form.errors.current_password = ''"
+          />
+          <small v-if="form.errors.current_password">{{ form.errors.current_password }}</small>
+        </div>
       </div>
 
+      <!-- New Password -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel
-          for="password"
-          value="New Password"
-        />
-        <TextInput
-          id="password"
-          ref="passwordInput"
-          v-model="form.password"
-          type="password"
-          class="mt-1 block w-full"
-          autocomplete="new-password"
-        />
-        <InputError
-          :message="form.errors.password"
-          class="mt-2"
-        />
+        <div class="flex flex-col gap-2">
+          <label for="password">New Password</label>
+          <InputText
+            id="password"
+            ref="passwordInput"
+            v-model="form.password"
+            placeholder="New Password"
+            :class="{ 'p-invalid': form.errors.password }"
+            type="password"
+            required
+            @input="form.errors.password = ''"
+          />
+          <small v-if="form.errors.password">{{ form.errors.password }}</small>
+        </div>
       </div>
 
+      <!-- Confirm Password -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel
-          for="password_confirmation"
-          value="Confirm Password"
-        />
-        <TextInput
-          id="password_confirmation"
-          v-model="form.password_confirmation"
-          type="password"
-          class="mt-1 block w-full"
-          autocomplete="new-password"
-        />
-        <InputError
-          :message="form.errors.password_confirmation"
-          class="mt-2"
-        />
+        <div class="flex flex-col gap-2">
+          <label for="password_confirmation">Confirm Password</label>
+          <InputText
+            id="password_confirmation"
+            v-model="form.password_confirmation"
+            placeholder="Confirm Password"
+            :class="{ 'p-invalid': form.errors.password_confirmation }"
+            type="password"
+            required
+            @input="form.errors.password_confirmation = ''"
+          />
+          <small v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
+        </div>
       </div>
     </template>
 
@@ -113,12 +109,14 @@ const updatePassword = () => {
         Saved.
       </ActionMessage>
 
-      <PrimaryButton
+      <Button
+        type="submit"
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
-      >
-        Save
-      </PrimaryButton>
+        label="Save"
+        icon="pi pi-check"
+      />
     </template>
   </FormSection>
 </template>
+

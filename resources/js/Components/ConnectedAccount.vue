@@ -1,5 +1,5 @@
 <script setup>
-import {computed, defineProps} from 'vue';
+import {defineProps} from 'vue';
 import ProviderIcon from '@/Components/SocialstreamIcons/ProviderIcon.vue';
 
 const props = defineProps({
@@ -18,20 +18,20 @@ const props = defineProps({
     <div class="px-3 flex items-center justify-between">
       <div class="flex items-center">
         <ProviderIcon
-          :provider="provider"
+          :provider="props.provider"
           classes="h-6 w-6 me-2"
         />
 
         <div class="ml-2">
           <div class="text-sm font-semibold text-gray-600">
-            {{ provider.name }}
+            {{ props.provider.name }}
           </div>
 
           <div
             v-if="createdAt !== null"
             class="text-xs text-gray-500"
           >
-            Connected {{ createdAt }}
+            Connected {{ props.createdAt }}
           </div>
 
           <div

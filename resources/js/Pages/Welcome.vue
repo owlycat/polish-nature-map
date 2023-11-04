@@ -2,10 +2,8 @@
 import { Head } from '@inertiajs/vue3';
 import PlacesList from '@/Components/PlacesList.vue';
 import { ref } from 'vue';
-import { useToast } from 'primevue/usetoast';
 import Map from '@/Components/Map.vue';
 
-const toast = useToast();
 const isListVisible = ref(true);
 
 const toggleListVisibility = () => {

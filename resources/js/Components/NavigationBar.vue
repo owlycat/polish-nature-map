@@ -2,7 +2,6 @@
 import {computed, ref} from 'vue';
 import {Link, router, usePage} from '@inertiajs/vue3'
 import { useToast } from 'primevue/usetoast';
-import Button from 'primevue/button';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
@@ -86,23 +85,23 @@ const endMenuItems = computed(() => [
       <i class="pi pi-map" />
       <div class="hidden md:flex md:gap-3">
         <template
-            v-for="item in leftItems"
-            :key="item.label"
+          v-for="item in leftItems"
+          :key="item.label"
         >
           <button
-              v-if="item.visible && item.command"
-              :disabled="item.disabled"
-              class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-              @click="item.command"
+            v-if="item.visible && item.command"
+            :disabled="item.disabled"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            @click="item.command"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
           </button>
           <Link
-              v-else-if="item.visible"
-              :href="item.route"
-              :class="{'opacity-50': item.disabled}"
-              class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            v-else-if="item.visible"
+            :href="item.route"
+            :class="{'opacity-50': item.disabled}"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
@@ -113,30 +112,30 @@ const endMenuItems = computed(() => [
 
     <div class="flex gap-3 pr-10 items-center">
       <button
-          class="text-white focus:outline-none md:hidden"
-          @click="mobileMenuOpen = !mobileMenuOpen"
+        class="text-white focus:outline-none md:hidden"
+        @click="mobileMenuOpen = !mobileMenuOpen"
       >
         <i class="pi pi-bars" />
       </button>
       <div class="hidden md:flex md:gap-3">
         <template
-            v-for="item in rightItems"
-            :key="item.label"
+          v-for="item in rightItems"
+          :key="item.label"
         >
           <button
-              v-if="item.visible && item.command"
-              :disabled="item.disabled"
-              class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-              @click="item.command"
+            v-if="item.visible && item.command"
+            :disabled="item.disabled"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            @click="item.command"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
           </button>
           <Link
-              v-else-if="item.visible"
-              :href="item.route"
-              :class="{'opacity-50': item.disabled}"
-              class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            v-else-if="item.visible"
+            :href="item.route"
+            :class="{'opacity-50': item.disabled}"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
@@ -150,18 +149,18 @@ const endMenuItems = computed(() => [
   <div>
     <transition name="slide-fade">
       <div
-          v-if="mobileMenuOpen"
-          class="md:hidden bg-white absolute w-full shadow z-40"
+        v-if="mobileMenuOpen"
+        class="md:hidden bg-white absolute w-full shadow z-40"
       >
         <template
-            v-for="item in visibleMenuItems"
-            :key="item.label"
+          v-for="item in visibleMenuItems"
+          :key="item.label"
         >
           <Link
-              v-if="item.route"
-              :href="item.route"
-              class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-              @click="mobileMenuOpen=false"
+            v-if="item.route"
+            :href="item.route"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            @click="mobileMenuOpen=false"
           >
             <div class="flex gap-3 items-center">
               <i :class="item.icon" />
@@ -170,9 +169,9 @@ const endMenuItems = computed(() => [
           </Link>
 
           <button
-              v-if="item.command"
-              class="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
-              @click="handleMenuItemClick(item)"
+            v-if="item.command"
+            class="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            @click="handleMenuItemClick(item)"
           >
             <div class="flex gap-3 items-center">
               <i :class="item.icon" /> {{ item.label }}

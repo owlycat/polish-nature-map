@@ -4,10 +4,8 @@ import { useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 defineProps({
     sessions: Array,
@@ -122,9 +120,13 @@ const closeModal = () => {
       </div>
 
       <div class="flex items-center mt-5">
-        <PrimaryButton @click="confirmLogout">
-          Log Out Other Browser Sessions
-        </PrimaryButton>
+        <Button
+          type="button"
+          label="Log Out Other Browser Sessions"
+          severity="info"
+          @click="confirmLogout"
+        />
+
 
         <ActionMessage
           :on="form.recentlySuccessful"
@@ -147,36 +149,41 @@ const closeModal = () => {
           Please enter your password to confirm you would like to log out of your other browser sessions across all of your devices.
 
           <div class="mt-4">
-            <TextInput
-              ref="passwordInput"
-              v-model="form.password"
-              type="password"
-              class="mt-1 block w-3/4"
-              placeholder="Password"
-              autocomplete="current-password"
-              @keyup.enter="logoutOtherBrowserSessions"
-            />
-
-            <InputError
-              :message="form.errors.password"
-              class="mt-2"
-            />
+            <div class="flex flex-col gap-2">
+              <InputText
+                id="password"
+                ref="passwordInput"
+                v-model="form.password"
+                placeholder="Password"
+                :class="{ 'p-invalid': form.errors.password }"
+                type="password"
+                required
+                @input="form.errors.password = ''"
+              />
+              <small v-if="form.errors.password">{{ form.errors.password }}</small>
+            </div>
           </div>
         </template>
 
         <template #footer>
-          <SecondaryButton @click="closeModal">
-            Cancel
-          </SecondaryButton>
+          <div class="flex gap-3">
+            <Button
+              type="button"
+              label="Cancel"
+              severity="secondary"
+              outlined
+              @click="closeModal"
+            />
 
-          <PrimaryButton
-            class="ms-3"
-            :class="{ 'opacity-25': form.processing }"
-            :disabled="form.processing"
-            @click="logoutOtherBrowserSessions"
-          >
-            Log Out Other Browser Sessions
-          </PrimaryButton>
+            <Button
+              type="button"
+              :class="{ 'opacity-25': form.processing }"
+              :disabled="form.processing"
+              label="Log Out Other Browser Sessions"
+              severity="danger"
+              @click="logoutOtherBrowserSessions"
+            />
+          </div>
         </template>
       </DialogModal>
     </template>

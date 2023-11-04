@@ -12,6 +12,7 @@ module.exports = {
         'vue/multi-word-component-names': "off",
         'vue/require-default-prop': "off",
         'eol-last': ['error', 'always'],
+        'vue/no-v-html': 'off',
         'vue/component-tags-order': ['error', {
             'order': ['script', 'template', 'style'],
         }],
