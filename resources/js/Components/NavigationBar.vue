@@ -80,9 +80,12 @@ const endMenuItems = computed(() => [
 
 
 <template>
-  <nav class="flex justify-between items-center bg-primary text-white p-4 z-50">
+  <nav class="flex justify-between items-center bg-primary text-white p-2 z-50">
     <div class="flex gap-10 pl-10 items-center">
-      <Link :href="'/'">
+      <Link
+        class="w-12 h-12 flex items-center justify-center rounded-md hover:bg-highlight-text-color"
+        :href="'/'"
+      >
         <i class="pi pi-map" />
       </Link>
       <div class="hidden md:flex md:gap-3">
@@ -93,7 +96,7 @@ const endMenuItems = computed(() => [
           <button
             v-if="item.visible && item.command"
             :disabled="item.disabled"
-            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-highlight-text-color transition-colors"
             @click="item.command"
           >
             <i :class="item.icon" />
@@ -103,7 +106,7 @@ const endMenuItems = computed(() => [
             v-else-if="item.visible"
             :href="item.route"
             :class="{'opacity-50': item.disabled}"
-            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-highlight-text-color transition-colors"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
@@ -127,7 +130,7 @@ const endMenuItems = computed(() => [
           <button
             v-if="item.visible && item.command"
             :disabled="item.disabled"
-            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-highlight-text-color transition-colors"
             @click="item.command"
           >
             <i :class="item.icon" />
@@ -137,7 +140,7 @@ const endMenuItems = computed(() => [
             v-else-if="item.visible"
             :href="item.route"
             :class="{'opacity-50': item.disabled}"
-            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-highlight-text-color transition-colors"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
@@ -161,7 +164,7 @@ const endMenuItems = computed(() => [
           <Link
             v-if="item.route"
             :href="item.route"
-            class="flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="flex items-center px-3 py-2 rounded-md hover:bg-surface-100 transition-colors"
             @click="mobileMenuOpen=false"
           >
             <div class="flex gap-3 items-center">
@@ -172,7 +175,7 @@ const endMenuItems = computed(() => [
 
           <button
             v-if="item.command"
-            class="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-700 transition-colors"
+            class="w-full flex items-center px-3 py-2 rounded-md hover:bg-surface-100 transition-colors"
             @click="handleMenuItemClick(item)"
           >
             <div class="flex gap-3 items-center">

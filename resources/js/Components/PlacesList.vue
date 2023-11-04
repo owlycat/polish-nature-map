@@ -2,7 +2,7 @@
 import Card from 'primevue/card';
 </script>
 <template>
-  <div class="bg-white rounded border md:max-w-md w-full flex flex-col h-full">
+  <div class="bg-white rounded border md:max-w-md w-full md:w-96 flex flex-col h-full">
     <Card class="sticky top-0 z-10">
       <template #title>
         (( Search component ))
