@@ -3,8 +3,8 @@
 namespace App\Importers;
 
 use App\Events\SpatialFeatureImporterRunEvent;
-use App\Model\Category;
-use App\Model\SpatialFeature;
+use App\Models\Category;
+use App\Models\SpatialFeature;
 
 abstract class SpatialFeaturesImporter {
 
@@ -12,14 +12,11 @@ abstract class SpatialFeaturesImporter {
 
     protected function __construct(string $categoryName) {
         $this->categoryName = $categoryName;
-
-        $this->createCategory($categoryName);
     }
 
     public function getCategoryName(): string {
         return $this->categoryName;
     }
-
 
     public function run(): void{
         Category::createCategoryIfNotExists($this->categoryName);

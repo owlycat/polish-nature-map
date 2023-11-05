@@ -13,5 +13,5 @@ abstract class DataSource {
         return $this->name;
     }
 
-    public function getData(mixed $data = null): array;
+    abstract public function getData(mixed $data = null): array;
 }
