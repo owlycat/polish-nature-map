@@ -15,7 +15,7 @@ use Throwable;
 
 class RunImporterJob implements ShouldQueue, ShouldBeUnique
 {
-    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private SpatialFeaturesImporter $importer;
 
@@ -26,35 +26,11 @@ class RunImporterJob implements ShouldQueue, ShouldBeUnique
 
     public function handle(): void
     {
-        if ($this->batch()->cancelled()) {
-            return;
-        }
-
         $this->importer->run();
-
-        $key = $this->getCacheKey();
-        Cache::forget($key);
-    }
-
-    public function isRunning(): bool {
-        $key = $this->getCacheKey();
-        return Cache::has($key);
     }
 
     public function uniqueId(): string
     {
-        return $this->importer->getCategoryName();
-    }
-
-    public function getCacheKey(): string {
-        return 'RunImporterJob-' . $this->uniqueId();
-    }
-
-    public function failed(\Throwable $exception): void
-    {
-        $key = $this->getCacheKey();
-        Cache::forget($key);
-
-        throw $exception;
+        return "RunImporterJob-" . $this->importer->getCategoryName();
     }
 }

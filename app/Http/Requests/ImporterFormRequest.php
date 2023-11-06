@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-
+use App\Rules\ExistingImporterClassRule;
 
 class ImporterFormRequest extends FormRequest
 {
@@ -28,10 +28,11 @@ class ImporterFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'importers' => 'required|array|min:1',
-            'importers.*' => 'required|array',
+            'importers' => ['required', 'array', 'min:1'],
             'importers.*.name' => 'required|string',
-            'importers.*.class' => 'required|string',
+            'importers.*.class' => ['required', 'string', new ExistingImporterClassRule],
         ];
     }
+
+
 }

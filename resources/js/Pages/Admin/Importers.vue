@@ -4,6 +4,7 @@ import { Head, useForm } from '@inertiajs/vue3';
 import Button from 'primevue/button';
 import { useToast } from 'primevue/usetoast';
 import MultiSelect from 'primevue/multiselect';
+import InputError from '@/Components/InputError.vue';
 
 const toast = useToast();
 
@@ -30,5 +31,7 @@ const runImporters = () => {
 
     <Button label="Import" @click="runImporters" />
     <MultiSelect v-model="form.importers" optionLabel="name" placeholder="Select Importers" :options="props.availableImporters" />
-    <div v-if="form.errors.importers">{{ form.errors.importers }}</div>
+    <template v-for="error in form.errors">
+        <InputError :message="error" />
+    </template>
 </template>

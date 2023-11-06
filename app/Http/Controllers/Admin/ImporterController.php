@@ -16,12 +16,16 @@ class ImporterController extends Controller
 {
     public function index(Request $request): Response
     {
-        $availableImporters = [
-            [
-                'name' => (new NationalParkImporter())->getCategoryName(),
-                'class' => NationalParkImporter::class,
-            ],
-        ];
+        $availableImporters = [];
+        $importers = app('importer.registry');
+
+        foreach ($importers as $importer) {
+            $availableImporters[] = [
+                'name' => (new $importer())->getCategoryName(),
+                'class' => $importer,
+                'status' => "???",
+            ];
+        }
 
         return Inertia::render('Admin/Importers', [
             'availableImporters' => $availableImporters,
