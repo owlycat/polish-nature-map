@@ -33,10 +33,6 @@ function createMap(){
 
         addControls(map.value);
     });
-
-    map.value.on('idle', function () {
-        map.value.resize()
-    });
 }
 
 const MAPLIBRE_TOKEN = import.meta.env.VITE_MAPLIBRE_TOKEN;
