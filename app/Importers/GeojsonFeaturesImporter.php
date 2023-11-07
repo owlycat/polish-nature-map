@@ -2,17 +2,15 @@
 
 namespace App\Importers;
 
-use App\Events\SpatialFeatureImporterRunEvent;
+use App\Events\GeojsonFeatureImporterRunEvent;
 use App\Models\Category;
 use App\Models\SpatialFeature;
 
-abstract class SpatialFeaturesImporter {
-
-    protected string $categoryName;
-
-    protected function __construct(string $categoryName) {
-        $this->categoryName = $categoryName;
-    }
+abstract class GeojsonFeaturesImporter
+{
+    protected function __construct(
+        protected string $categoryName
+    ) {}
 
     public function getCategoryName(): string {
         return $this->categoryName;

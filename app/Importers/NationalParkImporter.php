@@ -2,14 +2,13 @@
 
 namespace App\Importers;
 
-use App\Importers\SpatialFeaturesImporter;
-
+use App\Importers\GeojsonFeaturesImporter;
 use App\Helpers\Facades\GeojsonFeatureFacade;
 use App\DataSources\GDOSDataSource;
 use GeojsonFeature;
 
-class NationalParkImporter extends SpatialFeaturesImporter {
-
+class NationalParkImporter extends GeojsonFeaturesImporter
+{
     protected string $categoryName = "national_park";
 
     public function __construct() {

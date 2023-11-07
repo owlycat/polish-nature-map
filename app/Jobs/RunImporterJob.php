@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Importers\SpatialFeaturesImporter;
+use App\Importers\GeojsonFeaturesImporter;
 use Illuminate\Support\Facades\Cache;
 use Throwable;
 
@@ -17,9 +17,9 @@ class RunImporterJob implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private SpatialFeaturesImporter $importer;
+    private GeojsonFeaturesImporter $importer;
 
-    public function __construct(SpatialFeaturesImporter $importer)
+    public function __construct(GeojsonFeaturesImporter $importer)
     {
         $this->importer = $importer;
     }

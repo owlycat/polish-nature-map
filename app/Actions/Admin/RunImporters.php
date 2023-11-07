@@ -3,7 +3,7 @@
 namespace App\Actions\Admin;
 
 use App\Jobs\RunImporterJob;
-use App\Importers\SpatialFeaturesImporter;
+use App\Importers\GeojsonFeaturesImporter;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
 use Throwable;
@@ -15,12 +15,12 @@ use Illuminate\Container\Container;
 class RunImporters {
 
     /**
-     * @param SpatialFeaturesImporter[] $spatialFeaturesImporters Importers to run
+     * @param GeojsonFeaturesImporter[] $geojsonImporters Importers to run
      */
-    public function runJobs(array $spatialFeaturesImporters): void {
-        
-        foreach ($spatialFeaturesImporters as $spatialFeaturesImporter) {
-            RunImporterJob::dispatch($spatialFeaturesImporter);
+    public function runJobs(array $geojsonImporters): void {
+
+        foreach ($geojsonImporters as $importer) {
+            RunImporterJob::dispatch($importer);
         }
     }
 }

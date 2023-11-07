@@ -3,10 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Importers\SpatialFeaturesImporter;
 use App\Importers\NationalParkImporter;
 use App\Importers\LandscapeParkImporter;
-use App\Traits\Importable;
 
 class ImportersServiceProvider extends ServiceProvider
 {
