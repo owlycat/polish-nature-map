@@ -19,10 +19,9 @@ abstract class SpatialFeaturesImporter {
     }
 
     public function run(): void{
-        Category::createCategoryIfNotExists($this->categoryName);
+        $category = Category::firstOrCreate(['name' => $name]);
 
         $features = $this->getFeatures();
-
         // todo
     }
 

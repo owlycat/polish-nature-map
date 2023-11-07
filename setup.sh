@@ -1,7 +1,11 @@
 #!/bin/sh
 
-# Copy .env.example to .env
-cp .env.example .env
+echo "Creating .env file..."
+if [ ! -f .env ]; then
+    cp .env.example .env
+else
+    echo ".env file already exists, skipping..."
+fi
 
 # Install Sail
 docker run --rm \

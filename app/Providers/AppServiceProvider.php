@@ -22,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        if (config('telescope.enabled')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         $this->app->bind(CoordinateReferenceSystemFacade::class, function(){
             return new CoordinateReferenceSystemHelper();
         });

@@ -18,8 +18,7 @@ class RunImporters {
      * @param SpatialFeaturesImporter[] $spatialFeaturesImporters Importers to run
      */
     public function runJobs(array $spatialFeaturesImporters): void {
-        $user = auth()->user();
-
+        
         foreach ($spatialFeaturesImporters as $spatialFeaturesImporter) {
             RunImporterJob::dispatch($spatialFeaturesImporter);
         }

@@ -19,9 +19,4 @@ class Category extends Model
     {
         return $this->HasMany(SpatialFeature::class);
     }
-
-    public static function createCategoryIfNotExists($name): Category
-    {
-        return self::firstOrCreate(['name' => $name]);
-    }
 }
