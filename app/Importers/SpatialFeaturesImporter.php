@@ -19,7 +19,7 @@ abstract class SpatialFeaturesImporter {
     }
 
     public function run(): void{
-        $category = Category::firstOrCreate(['name' => $name]);
+        $category = Category::firstOrCreate(['name' => $this->getCategoryName()]);
 
         $features = $this->getFeatures();
         // todo
