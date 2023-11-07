@@ -8,12 +8,8 @@ use App\Models\SpatialFeature;
 
 abstract class GeojsonFeaturesImporter
 {
-    protected function __construct(
-        protected string $categoryName
-    ) {}
-
     public function getCategoryName(): string {
-        return $this->categoryName;
+        return static::CATEGORY_NAME;
     }
 
     public function run(): void{

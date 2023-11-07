@@ -9,11 +9,7 @@ use GeojsonFeature;
 
 class NationalParkImporter extends GeojsonFeaturesImporter
 {
-    protected string $categoryName = "national_park";
-
-    public function __construct() {
-        parent::__construct($this->categoryName);
-    }
+    const CATEGORY_NAME = "national_park";
 
     public function getFeatures(): array {
         return [];

@@ -3,18 +3,13 @@
 namespace App\Importers;
 
 use App\Importers\GeojsonFeaturesImporter;
-
 use App\Helpers\Facades\GeojsonFeatureFacade;
 use App\DataSources\GDOSDataSource;
 use GeojsonFeature;
 
 class LandscapeParkImporter extends GeojsonFeaturesImporter
 {
-    protected string $categoryName = "landscape_park";
-
-    public function __construct() {
-        parent::__construct($this->categoryName);
-    }
+    const CATEGORY_NAME = "landscape_park";
 
     public function getFeatures(): array {
         return [];
