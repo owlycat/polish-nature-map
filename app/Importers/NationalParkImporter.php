@@ -12,7 +12,6 @@ class NationalParkImporter extends GeojsonFeaturesImporter
     const CATEGORY_NAME = "national_park";
 
     public function getFeatures(): array {
-        return [];
         $dataSource = new GDOSDataSource();
 
         $features = $dataSource->getData([ "typeName" => "GDOS:ParkiNarodowe" ]);
