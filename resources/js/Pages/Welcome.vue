@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3';
 import PlacesList from '@/Components/PlacesList.vue';
 import { ref } from 'vue';
-import Map from '@/Components/Map.vue';
+import Map from '@/Components/Maplibre/Map.vue';
 
 const isListVisible = ref(true);
 
