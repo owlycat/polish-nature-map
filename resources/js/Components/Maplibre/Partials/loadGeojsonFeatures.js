@@ -21,10 +21,11 @@ export function loadGeojsonFeatures(map, geojson, sourceName, color) {
             'circle-radius': [
                 'step',
                 ['get', 'point_count'],
-                15,
-                50,
-                70,
-
+                20,
+                100,
+                30,
+                750,
+                40
             ]
         }
     });
