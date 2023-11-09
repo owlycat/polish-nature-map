@@ -165,12 +165,13 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
+        App\Providers\ImportersServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -185,7 +186,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'CRS' => App\Helpers\Facades\CoordinateReferenceSystemFacade::class,
+        'PointCentroid' => App\Helpers\Facades\PointCentroidFacade::class,
+        'GeojsonFeature' => App\Helpers\Facades\GeojsonFeatureFacade::class,
     ])->toArray(),
 
 ];
