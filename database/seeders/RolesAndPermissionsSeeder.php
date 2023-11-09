@@ -21,6 +21,13 @@ class RolesAndPermissionsSeeder extends Seeder
             return ['name' => $permission, 'guard_name' => 'web'];
         });
 
+        $permissionsInDatabase = Permission::all();
+        foreach ($permissionsInDatabase as $permission) {
+            if (!in_array($permission->name, $arrayOfPermissionNames)) {
+                $permission->delete();
+            }
+        }
+
         $permissions->each(function ($permission) {
             Permission::firstOrCreate($permission);
         });
@@ -29,9 +36,18 @@ class RolesAndPermissionsSeeder extends Seeder
             new AdminRole(),
         ];
 
+        $rolesInDatabase = Role::all();
+        foreach ($rolesInDatabase as $role) {
+            if (!in_array($role->name, array_map(function ($role) {
+                return $role->getName();
+            }, $roles))) {
+                $role->delete();
+            }
+        }
+
         foreach($roles as $role) {
             Role::firstOrCreate(['name' => $role->getName()])
-            ->givePermissionTo($role->getPermissions());
+            ->syncPermissions($role->getPermissions());
         }
     }
 }
