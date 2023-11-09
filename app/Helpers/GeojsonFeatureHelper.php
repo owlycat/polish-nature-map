@@ -79,4 +79,20 @@ class GeojsonFeatureHelper
         ];
     }
 
+    public function renameProperty(array $geojson, string $oldName, string $newName): array
+    {
+        $features = &$geojson['features'];
+    
+        array_walk($features, function (&$feature) use ($oldName, $newName) {
+            if (isset($feature['properties'][$oldName])) {
+                $feature['properties'][$newName] = $feature['properties'][$oldName];
+                unset($feature['properties'][$oldName]);
+            }
+        });
+    
+        return [
+            'type' => 'FeatureCollection',
+            'features' => $features,
+        ];
+    }
 }
