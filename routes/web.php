@@ -41,6 +41,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/admin/importers', [ImporterController::class, 'index'])->name('admin.importers.index');
-    Route::put('/admin/importers', [ImporterController::class, 'run'])->name('admin.importers.run');
+    Route::get('/admin', [ImporterController::class, 'index'])->name('admin.importers.index');
+    Route::put('/admin', [ImporterController::class, 'run'])->name('admin.importers.run');
 });
