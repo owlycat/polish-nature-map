@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Category;
 use Laravel\Scout\Searchable;
+use App\Models\Embeddable\Coordinates;
 
 class SpatialFeature extends Model
 {
     use HasFactory;
-    use Searchable;
 
     protected $casts = [
         "name" => "string",
-        "_geo" => "array",
+        "_geo" => Coordinates::class,
     ];
 
     protected $fillable = [
