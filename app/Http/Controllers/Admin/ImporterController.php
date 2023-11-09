@@ -10,7 +10,6 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Actions\Admin\RunImporters;
 use App\Importers\NationalParkImporter;
-use App\Events\SendMessageEvent;
 
 class ImporterController extends Controller
 {
