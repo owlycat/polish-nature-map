@@ -21,14 +21,16 @@ class RolesAndPermissionsSeeder extends Seeder
             return ['name' => $permission, 'guard_name' => 'web'];
         });
 
-        Permission::insert($permissions->toArray());
+        $permissions->each(function ($permission) {
+            Permission::firstOrCreate($permission);
+        });
 
         $roles = [
             new AdminRole(),
         ];
 
         foreach($roles as $role) {
-            Role::create(['name' => $role->getName()])
+            Role::firstOrCreate(['name' => $role->getName()])
             ->givePermissionTo($role->getPermissions());
         }
     }
