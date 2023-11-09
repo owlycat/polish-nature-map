@@ -19,6 +19,7 @@ class NationalParkImporter extends GeojsonFeaturesImporter
         $features = GeojsonFeature::excludeFeaturesHasPhrase(phrase: "otulina", geojson: $features, paramName: "nazwa");
         $features = GeojsonFeature::convertToPoints($features);
         $features = GeojsonFeature::convertCrs($features, "2180", "4326");
+        $features = GeojsonFeature::renameProperty($features, "nazwa", "name");
 
         return $features;
     }
