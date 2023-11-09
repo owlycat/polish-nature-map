@@ -1,0 +1,396 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-337b",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    23.02987377167382,
+                    50.60027103252144
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2496,
+                "kodinspire": "PL.ZIPOP.1393.PN.17",
+                "name": "Roztoczański Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3376",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.770117015280503,
+                    52.597673388278416
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2507,
+                "kodinspire": "PL.ZIPOP.1393.PN.23",
+                "name": "Park Narodowy Ujście Warty"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3373",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    23.865877166547694,
+                    52.76439322690422
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2506,
+                "kodinspire": "PL.ZIPOP.1393.PN.8",
+                "name": "Białowieski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3372",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    17.565670503431377,
+                    53.814822408596335
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2504,
+                "kodinspire": "PL.ZIPOP.1393.PN.3",
+                "name": "Park Narodowy Bory Tucholskie"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3371",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    20.387893021180208,
+                    49.420902866871366
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2487,
+                "kodinspire": "PL.ZIPOP.1393.PN.5",
+                "name": "Pieniński Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3370",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    20.579514671456735,
+                    52.323644064289
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2491,
+                "kodinspire": "PL.ZIPOP.1393.PN.9",
+                "name": "Kampinoski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-336b",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    20.943351193564602,
+                    50.89936844304614
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2485,
+                "kodinspire": "PL.ZIPOP.1393.PN.6",
+                "name": "Świętokrzyski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3369",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.960826754172395,
+                    49.248627996121236
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2488,
+                "kodinspire": "PL.ZIPOP.1393.PN.14",
+                "name": "Tatrzański Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3368",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.813240564844683,
+                    50.21446250344467
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2489,
+                "kodinspire": "PL.ZIPOP.1393.PN.1",
+                "name": "Ojcowski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3367",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.352303724204102,
+                    50.46494274551626
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2502,
+                "kodinspire": "PL.ZIPOP.1393.PN.15",
+                "name": "Park Narodowy Gór Stołowych"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3366",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    22.88266079339917,
+                    53.055157473755536
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2505,
+                "kodinspire": "PL.ZIPOP.1393.PN.10",
+                "name": "Narwiański Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3363",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    23.188215119551757,
+                    51.429404831003026
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2500,
+                "kodinspire": "PL.ZIPOP.1393.PN.12",
+                "name": "Poleski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3362",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    19.542530569308507,
+                    49.589281275419076
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2486,
+                "kodinspire": "PL.ZIPOP.1393.PN.19",
+                "name": "Babiogórski Park Narodowy z siedzibą w Zawoi"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-335e",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    16.791413084945013,
+                    52.280809111304
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2490,
+                "kodinspire": "PL.ZIPOP.1393.PN.20",
+                "name": "Wielkopolski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-335d",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    17.307023287734925,
+                    54.7142379639032
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 44118,
+                "kodinspire": "PL.ZIPOP.1393.PN.24",
+                "name": "Słowiński Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-335c",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    15.945307873978381,
+                    53.10774755212846
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2499,
+                "kodinspire": "PL.ZIPOP.1393.PN.18",
+                "name": "Drawieński Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-335b",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    15.638006799806545,
+                    50.77980537971563
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2492,
+                "kodinspire": "PL.ZIPOP.1393.PN.11",
+                "name": "Karkonoski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3357",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    23.099425397930965,
+                    54.0442078747754
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2498,
+                "kodinspire": "PL.ZIPOP.1393.PN.2",
+                "name": "Wigierski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3356",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    20.15044164648839,
+                    49.56144792304437
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2497,
+                "kodinspire": "PL.ZIPOP.1393.PN.21",
+                "name": "Gorczański Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3355",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    21.458128712863964,
+                    49.5144089748985
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2503,
+                "kodinspire": "PL.ZIPOP.1393.PN.16",
+                "name": "Magurski Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3354",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    22.75748045691842,
+                    53.503743477318515
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2501,
+                "kodinspire": "PL.ZIPOP.1393.PN.22",
+                "name": "Biebrzański Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3353",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    14.483959537407703,
+                    53.924947680425845
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2493,
+                "kodinspire": "PL.ZIPOP.1393.PN.4",
+                "name": "Woliński Park Narodowy"
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "ParkiNarodowe.fid-7836c2d2_18b94cb8f81_-3350",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    22.640817721635617,
+                    49.11293028339878
+                ]
+            },
+            "geometry_name": "geom",
+            "properties": {
+                "gid": 2495,
+                "kodinspire": "PL.ZIPOP.1393.PN.7",
+                "name": "Bieszczadzki Park Narodowy"
+            }
+        }
+    ]
+}

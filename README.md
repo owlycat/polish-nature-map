@@ -34,3 +34,11 @@ alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 ```
 
 To make sure this is always available, you may add this to your shell configuration file in your home directory. For example, in `~/.bashrc` or `~/.zshrc`.
+
+### Laravel Telescope
+[Laravel Telescope](https://laravel.com/docs/10.x/telescope)'s vendor styles aren't included in the repository.
+
+If you want to use Telescope for development, enable it in the environment and publish assets:
+```bash
+./vendor/bin/sail php artisan vendor:publish --tag=telescope-assets
+```

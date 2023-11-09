@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import Toast from 'primevue/toast';
 import NavigationBar from '@/Components/NavigationBar.vue';
 
+
 defineProps({
     title: String,
 });
