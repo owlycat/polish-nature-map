@@ -12,9 +12,21 @@ class Coordinates extends Data
 
     public static function fromArray(array $data): self
     {
+        if (isset($data['lat']) && isset($data['lng'])) {
+            return new self(
+                lat: $data['lat'],
+                lng: $data['lng']
+            );
+        }
+
         return new self(
             lat: $data[1],
             lng: $data[0]
         );
+    }
+
+    public function toArray(): array
+    {
+        return [$this->lng, $this->lat];
     }
 }

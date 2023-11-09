@@ -4,6 +4,10 @@ import PlacesList from '@/Components/PlacesList.vue';
 import { ref } from 'vue';
 import Map from '@/Components/Maplibre/Map.vue';
 
+const props = defineProps({
+    geojson: JSON,
+});
+
 const isListVisible = ref(true);
 
 const toggleListVisibility = () => {
@@ -25,7 +29,7 @@ const toggleListVisibility = () => {
       </button>
     </div>
     <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
-      <Map />
+      <Map :mapData="props.geojson" />
     </div>
     <button
       v-show="!isListVisible"

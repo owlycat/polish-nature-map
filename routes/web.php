@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\ImporterController;
+use App\Http\Controllers\WelcomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,16 +16,9 @@ use App\Http\Controllers\Admin\ImporterController;
 |
 */
 
-Route::get('/', function () {
-    $importer = new App\Importers\NationalParkImporter();
 
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-})->name('index');
+
+Route::get('/', [WelcomeController::class, 'index'])->name('index');
 
 Route::middleware([
     'auth:sanctum',

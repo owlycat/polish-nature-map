@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount} from 'vue';
+import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
 import { addControls } from './Partials/mapControls.js';
 import { loadGeojsonFeatures } from './Partials/loadGeojsonFeatures.js';
 import ProgressSpinner from 'primevue/progressspinner';
@@ -11,6 +11,7 @@ const MAPLIBRE_TOKEN = import.meta.env.VITE_MAPLIBRE_TOKEN;
 const mapContainer = ref(null);
 const map = ref(null);
 
+const { mapData } = defineProps(['mapData']);
 
 const LoadingStates = {
     FetchingData: 'Fetching Data...',
@@ -37,30 +38,17 @@ function createMap() {
     });
 
     map.value.on('load', () => {
-    fetch('./assets/placeholder/output.geojson')
-        .then(response => response.json())
-        .then(geojson => {
-            currentLoadingState.value = LoadingStates.PopulatingMap;
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    loadGeojsonFeatures(map.value, geojson, 'placeholder', '#6321b5');
-                    resolve();
-                }, 200);
-            });
-        })
-        .then(() => {
-            currentLoadingState.value = LoadingStates.RenderingMap;
-            return new Promise(resolve => {
-                setTimeout(() => {
-                    addControls(map.value);
-                    resolve();
-                }, 200);
-            });
-        })
-        .finally(() => {
-            currentLoadingState.value = LoadingStates.Completed;
-        });
-});
+        currentLoadingState.value = LoadingStates.PopulatingMap;
+        
+        for (let feature of mapData) {
+            loadGeojsonFeatures(map.value, feature.geojson, feature.category, feature.color);
+        }
+        
+        currentLoadingState.value = LoadingStates.RenderingMap;
+        addControls(map.value);
+
+        currentLoadingState.value = LoadingStates.Completed;
+    });
 }
 
 onMounted(() => {
@@ -75,6 +63,7 @@ onBeforeUnmount(() => {
     destroyMap();
 });
 </script>
+
 <template>
     <div v-show="currentLoadingState !== LoadingStates.Completed" class="flex items-center justify-center w-full h-full">
         <div class="flex flex-col gap-2">
