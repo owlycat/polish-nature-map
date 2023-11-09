@@ -39,7 +39,7 @@ Route::group(['middleware' => [
         });
 
         Route::group(['middleware' => [Authorize::using(Permissions::RunImporters->value)]], function () {
-            Route::put('/admin/importers/run', [ImporterController::class, 'run'])->name('admin.importers.run');
+            Route::put('/admin/importers', [ImporterController::class, 'run'])->name('admin.importers.run');
         });
     }
 );
