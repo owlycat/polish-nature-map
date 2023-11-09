@@ -31,14 +31,14 @@ Route::middleware([
 Route::group(['middleware' => [
     'auth:sanctum',
      config('jetstream.auth_session'),
-     Authorize::using(Permissions::ViewAdminPanel->value)
+     Authorize::using(Permissions::VIEW_ADMIN_PANEL->value)
     ]], function ()
     {
-        Route::group(['middleware' => [Authorize::using(Permissions::ViewImporters->value)]], function () {
+        Route::group(['middleware' => [Authorize::using(Permissions::VIEW_IMPORTERS->value)]], function () {
             Route::get('/admin/importers', [ImporterController::class, 'index'])->name('admin.importers.index');
         });
 
-        Route::group(['middleware' => [Authorize::using(Permissions::RunImporters->value)]], function () {
+        Route::group(['middleware' => [Authorize::using(Permissions::RUN_IMPORTERS->value)]], function () {
             Route::put('/admin/importers', [ImporterController::class, 'run'])->name('admin.importers.run');
         });
     }
