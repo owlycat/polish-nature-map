@@ -16,9 +16,27 @@ jobs:
     timeout-minutes: 10
     if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
+    env:
+      GITHUB_CLIENT_ID: ${{ secrets.OAUTH_GITHUB_CLIENT_ID }}
+      GITHUB_CLIENT_SECRET: ${{ secrets.OAUTH_GITHUB_CLIENT_SECRET }}
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: polish_nature_map_test
+          MYSQL_USER: test
+          MYSQL_PASSWORD: password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Copy .env.ci to .env
+        run: cp .env.ci .env
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -42,6 +60,12 @@ jobs:
 
       - name: Run PHP linter
         run: ./vendor/bin/pint --test
+
+      - name: Prepare Laravel application
+        run: php artisan key:generate
+
+      - name: Execute migrations
+        run: php artisan migrate --force
 
       - name: Execute tests
         run: php artisan test
