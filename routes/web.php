@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\ImporterController;
 use App\Enums\Permissions;
-
+use App\Http\Controllers\WelcomeController;
 
 
 Route::get('/', [WelcomeController::class, 'index'])->name('index');
