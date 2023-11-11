@@ -11,7 +11,9 @@ const MAPLIBRE_TOKEN = import.meta.env.VITE_MAPLIBRE_TOKEN;
 const mapContainer = ref(null);
 const map = ref(null);
 
-const { mapData } = defineProps(['mapData']);
+const { mapData } = defineProps({
+    mapData: JSON,
+});
 
 const LoadingStates = {
     FetchingData: 'Fetching Data...',
@@ -65,11 +67,18 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div v-show="currentLoadingState !== LoadingStates.Completed" class="flex items-center justify-center w-full h-full">
-        <div class="flex flex-col gap-2">
-            <ProgressSpinner />
-            {{ currentLoadingState }}
-        </div>
+  <div
+    v-show="currentLoadingState !== LoadingStates.Completed"
+    class="flex items-center justify-center w-full h-full"
+  >
+    <div class="flex flex-col gap-2">
+      <ProgressSpinner />
+      {{ currentLoadingState }}
     </div>
-    <div v-show="currentLoadingState === LoadingStates.Completed" ref="mapContainer" class="h-full w-full"/>
+  </div>
+  <div
+    v-show="currentLoadingState === LoadingStates.Completed"
+    ref="mapContainer"
+    class="h-full w-full"
+  />
 </template>

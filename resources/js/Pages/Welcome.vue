@@ -19,7 +19,10 @@ const toggleListVisibility = () => {
   <Head title="Welcome" />
   <div class="flex-grow overflow-y-auto h-screen flex md:flex-row flex-col-reverse">
     <div :class="isListVisible ? 'h-3/5 md:h-full relative' : 'h-0'">
-      <PlacesList v-show="isListVisible" />
+      <PlacesList
+        v-show="isListVisible"
+        :data="props.geojson"
+      />
       <button
         v-show="isListVisible"
         class="absolute top-0 right-0 m-4 md:hidden z-20"
@@ -29,7 +32,7 @@ const toggleListVisibility = () => {
       </button>
     </div>
     <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
-      <Map :mapData="props.geojson" />
+      <Map :map-data="props.geojson" />
     </div>
     <button
       v-show="!isListVisible"
