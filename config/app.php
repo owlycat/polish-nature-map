@@ -172,6 +172,7 @@ return [
         App\Providers\JetstreamServiceProvider::class,
         App\Providers\SocialstreamServiceProvider::class,
         App\Providers\ImportersServiceProvider::class,
+        App\Providers\MysqlServiceProvider::class,
     ])->toArray(),
 
     /*
