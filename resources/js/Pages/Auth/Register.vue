@@ -159,6 +159,7 @@ const submit = () => {
 
         <Button
           :class="{ 'opacity-25': form.processing }"
+          type="submit"
           :disabled="form.processing"
           label="Register"
           class="ml-4"
