@@ -43,7 +43,7 @@ const endMenuItems = computed(() => [
         icon: 'pi pi-user-edit',
         justify: 'start',
         visible: user.value !== null,
-        disabled: route().current('admin'),
+        disabled: route().current('admin.importers.index'),
         route: '/admin',
       },
       {
