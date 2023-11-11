@@ -3,8 +3,8 @@
 namespace App\Rules;
 
 use Closure;
-use Illuminate\Contracts\Validation\ValidationRule;
 use geoPHP;
+use Illuminate\Contracts\Validation\ValidationRule;
 
 class GeometryRule implements ValidationRule
 {
@@ -17,8 +17,7 @@ class GeometryRule implements ValidationRule
     {
         try {
             geoPhp::load(json_encode($value), 'json');
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             $fail($e->getMessage());
         }
     }

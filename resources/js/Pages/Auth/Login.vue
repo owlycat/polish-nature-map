@@ -4,10 +4,9 @@ import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Socialstream from '@/Components/Socialstream.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 defineProps({
     canResetPassword: Boolean,
@@ -46,44 +45,51 @@ const submit = () => {
     </div>
 
     <form @submit.prevent="submit">
-      <div>
-        <InputLabel
-          for="email"
-          value="Email"
-        />
-        <TextInput
-          id="email"
-          v-model="form.email"
-          autofocus
-          class="mt-1 block w-full"
-          required
-          type="email"
-        />
-        <InputError
-          :message="form.errors.email"
-          class="mt-2"
-        />
+      <!-- Email -->
+      <div class="col-span-6 sm:col-span-4">
+        <div class="flex flex-col gap-2">
+          <label for="email">Email</label>
+          <InputText
+            id="email"
+            v-model="form.email"
+            placeholder="E-mail address"
+            :class="{ 'p-invalid': form.errors.email }"
+            type="email"
+            required
+            autocomplete="email"
+            class="mt-1 block w-full"
+            @input="form.errors.email = ''"
+          />
+          <InputError
+            :message="form.errors.email"
+            class="mt-2"
+          />
+        </div>
       </div>
 
-      <div class="mt-4">
-        <InputLabel
-          for="password"
-          value="Password"
-        />
-        <TextInput
-          id="password"
-          v-model="form.password"
-          autocomplete="current-password"
-          class="mt-1 block w-full"
-          required
-          type="password"
-        />
-        <InputError
-          :message="form.errors.password"
-          class="mt-2"
-        />
+      <!-- Password -->
+      <div class="col-span-6 sm:col-span-4 mt-4">
+        <div class="flex flex-col gap-2">
+          <label for="password">Password</label>
+          <InputText
+            id="password"
+            v-model="form.password"
+            placeholder="Password"
+            :class="{ 'p-invalid': form.errors.password }"
+            type="password"
+            required
+            autocomplete="current-password"
+            class="mt-1 block w-full"
+            @input="form.errors.password = ''"
+          />
+          <InputError
+            :message="form.errors.password"
+            class="mt-2"
+          />
+        </div>
       </div>
 
+      <!-- Remember Me -->
       <div class="block mt-4">
         <label class="flex items-center">
           <Checkbox
@@ -94,22 +100,23 @@ const submit = () => {
         </label>
       </div>
 
+      <!-- Actions -->
       <div class="flex items-center justify-end mt-4">
         <Link
           v-if="canResetPassword"
           :href="route('password.request')"
-          class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          class="underline text-sm text-gray-600 hover:text-gray-900"
         >
           Forgot your password?
         </Link>
 
-        <PrimaryButton
+        <Button
+          type="submit"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
+          label="Log in"
           class="ml-4"
-        >
-          Log in
-        </PrimaryButton>
+        />
       </div>
     </form>
 
@@ -122,3 +129,4 @@ const submit = () => {
     />
   </AuthenticationCard>
 </template>
+

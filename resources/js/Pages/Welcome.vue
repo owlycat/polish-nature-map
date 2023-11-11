@@ -2,10 +2,12 @@
 import { Head } from '@inertiajs/vue3';
 import PlacesList from '@/Components/PlacesList.vue';
 import { ref } from 'vue';
-import { useToast } from 'primevue/usetoast';
 import Map from '@/Components/Maplibre/Map.vue';
 
-const toast = useToast();
+const props = defineProps({
+    geojson: JSON,
+});
+
 const isListVisible = ref(true);
 
 const toggleListVisibility = () => {
@@ -16,8 +18,11 @@ const toggleListVisibility = () => {
 <template>
   <Head title="Welcome" />
   <div class="flex-grow overflow-y-auto h-screen flex md:flex-row flex-col-reverse">
-    <div :class="isListVisible ? 'h-1/2 md:h-full relative' : 'h-0'">
-      <PlacesList v-show="isListVisible" />
+    <div :class="isListVisible ? 'h-3/5 md:h-full relative' : 'h-0'">
+      <PlacesList
+        v-show="isListVisible"
+        :data="props.geojson"
+      />
       <button
         v-show="isListVisible"
         class="absolute top-0 right-0 m-4 md:hidden z-20"
@@ -26,8 +31,8 @@ const toggleListVisibility = () => {
         Hide List
       </button>
     </div>
-    <div :class="isListVisible ? 'w-full h-1/2 md:h-full' : 'w-full h-full'">
-      <Map />
+    <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
+      <Map :map-data="props.geojson" />
     </div>
     <button
       v-show="!isListVisible"

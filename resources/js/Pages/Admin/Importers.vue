@@ -1,18 +1,12 @@
 <script setup>
-import { ref } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import Button from 'primevue/button';
-import { useToast } from 'primevue/usetoast';
 import MultiSelect from 'primevue/multiselect';
 import InputError from '@/Components/InputError.vue';
-
-const toast = useToast();
 
 const props = defineProps({
     availableImporters: Array,
 });
-
-const importers = ref([]);
 
 const form = useForm({
     importers: [],

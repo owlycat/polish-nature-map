@@ -2,9 +2,10 @@
 
 namespace App\Roles;
 
-abstract class PermissionRole {
-
-    public function getName(): string {
+abstract class PermissionRole
+{
+    public function getName(): string
+    {
         return static::ROLE_NAME;
     }
 

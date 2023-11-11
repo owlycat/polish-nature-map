@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Enums\Permissions as PermissionsEnum;
 use App\Roles\AdminRole;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -23,7 +23,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permissionsInDatabase = Permission::all();
         foreach ($permissionsInDatabase as $permission) {
-            if (!in_array($permission->name, $arrayOfPermissionNames)) {
+            if (! in_array($permission->name, $arrayOfPermissionNames)) {
                 $permission->delete();
             }
         }
@@ -38,16 +38,16 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $rolesInDatabase = Role::all();
         foreach ($rolesInDatabase as $role) {
-            if (!in_array($role->name, array_map(function ($role) {
+            if (! in_array($role->name, array_map(function ($role) {
                 return $role->getName();
             }, $roles))) {
                 $role->delete();
             }
         }
 
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             Role::firstOrCreate(['name' => $role->getName()])
-            ->syncPermissions($role->getPermissions());
+                ->syncPermissions($role->getPermissions());
         }
     }
 }

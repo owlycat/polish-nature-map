@@ -8,7 +8,7 @@ class InvalidGeometryException extends Exception
 {
     public function __construct($message = null)
     {
-        if (!$message) {
+        if (! $message) {
             $message = 'The geometry field must be a valid GeoJSON object.';
         }
 

@@ -4,12 +4,9 @@ import {useForm, usePage} from '@inertiajs/vue3';
 import ActionLink from '@/Components/ActionLink.vue';
 import ActionSection from '@/Components/ActionSection.vue';
 import ConnectedAccount from '@/Components/ConnectedAccount.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import DialogModal from '@/Components/DialogModal.vue';
-import InputError from '@/Components/InputError.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 const accountId = ref(null);
 const confirmingRemoveAccount = ref(false);
@@ -99,21 +96,23 @@ const closeModal = () => {
           >
             <template #action>
               <template v-if="getAccountForProvider(provider)">
-                <div class="flex items-center space-x-6">
-                  <button
+                <div class="flex items-center flex-wrap gap-3">
+                  <Button
                     v-if="$page.props.jetstream.managesProfilePhotos && getAccountForProvider(provider).avatar_path"
-                    class="cursor-pointer ms-6 text-sm text-gray-500 hover:text-gray-700 focus:outline-none"
+                    type="button"
+                    label="Use Avatar"
+                    severity="secondary"
+                    outlined
                     @click="setProfilePhoto(getAccountForProvider(provider).id)"
-                  >
-                    Use Avatar as Profile Photo
-                  </button>
+                  />
 
-                  <DangerButton
+                  <Button
                     v-if="$page.props.socialstream.connectedAccounts.length > 1 || $page.props.socialstream.hasPassword"
+                    type="button"
+                    label="Remove"
+                    severity="danger"
                     @click="confirmRemoveAccount(getAccountForProvider(provider).id)"
-                  >
-                    Remove
-                  </DangerButton>
+                  />
                 </div>
               </template>
 
@@ -140,36 +139,41 @@ const closeModal = () => {
           Please enter your password to confirm you would like to remove this account.
 
           <div class="mt-4">
-            <TextInput
-              ref="passwordInput"
-              v-model="form.password"
-              type="password"
-              class="mt-1 block w-3/4"
-              placeholder="Password"
-              autocomplete="current-password"
-              @keyup.enter="removeAccount"
-            />
-
-            <InputError
-              :message="form.errors.password"
-              class="mt-2"
-            />
+            <div class="flex flex-col gap-2">
+              <InputText
+                id="password"
+                ref="passwordInput"
+                v-model="form.password"
+                placeholder="Password"
+                :class="{ 'p-invalid': form.errors.password }"
+                type="password"
+                required
+                @input="form.errors.password = ''"
+              />
+              <small v-if="form.errors.password">{{ form.errors.password }}</small>
+            </div>
           </div>
         </template>
 
         <template #footer>
-          <SecondaryButton @click="closeModal">
-            Cancel
-          </SecondaryButton>
+          <div class="flex gap-3">
+            <Button
+              type="button"
+              label="Cancel"
+              severity="secondary"
+              outlined
+              @click="closeModal"
+            />
 
-          <PrimaryButton
-            class="ml-2"
-            :class="{ 'opacity-25': form.processing }"
-            :disabled="form.processing"
-            @click="removeAccount"
-          >
-            Remove Account
-          </PrimaryButton>
+            <Button
+              type="button"
+              :class="{ 'opacity-25': form.processing }"
+              :disabled="form.processing"
+              label="Remove Account"
+              severity="danger"
+              @click="removeAccount"
+            />
+          </div>
         </template>
       </DialogModal>
     </template>

@@ -2,14 +2,17 @@
 
 namespace App\DataSources;
 
-abstract class DataSource {
+abstract class DataSource
+{
     protected string $name;
 
-    protected function __construct(string $name) {
+    protected function __construct(string $name)
+    {
         $this->name = $name;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 

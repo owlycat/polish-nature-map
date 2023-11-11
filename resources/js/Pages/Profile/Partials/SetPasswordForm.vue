@@ -2,11 +2,9 @@
 import {ref} from 'vue';
 import {useForm} from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
-import Button from '@/Components/PrimaryButton.vue';
 import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
 
 const passwordInput = ref(null);
 
@@ -43,41 +41,41 @@ const setPassword = () => {
     </template>
 
     <template #form>
+      <!-- New Password -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel
-          for="password"
-          value="New Password"
-        />
-        <TextInput
-          id="password"
-          ref="passwordInput"
-          v-model="form.password"
-          autocomplete="new-password"
-          class="mt-1 block w-full"
-          type="password"
-        />
-        <InputError
-          :message="form.errors.password"
-          class="mt-2"
-        />
+        <div class="flex flex-col gap-2">
+          <label for="password">New Password</label>
+          <InputText
+            id="password"
+            ref="passwordInput"
+            v-model="form.password"
+            placeholder="New Password"
+            :class="{ 'p-invalid': form.errors.password }"
+            type="password"
+            autocomplete="new-password"
+            required
+            @input="form.errors.password = ''"
+          />
+          <small v-if="form.errors.password">{{ form.errors.password }}</small>
+        </div>
       </div>
 
+      <!-- Confirm Password -->
       <div class="col-span-6 sm:col-span-4">
-        <InputLabel
-          for="password_confirmation"
-          value="Confirm Password"
-        />
-        <TextInput
-          id="password_confirmation"
-          v-model="form.password_confirmation"
-          autocomplete="new-password"
-          class="mt-1 block w-full"
-          type="password"
-        />
-        <InputError
-          :message="form.errors.password_confirmation"
-          class="mt-2"
-        />
+        <div class="flex flex-col gap-2">
+          <label for="password_confirmation">Confirm Password</label>
+          <InputText
+            id="password_confirmation"
+            v-model="form.password_confirmation"
+            placeholder="Confirm Password"
+            :class="{ 'p-invalid': form.errors.password_confirmation }"
+            type="password"
+            autocomplete="new-password"
+            required
+            @input="form.errors.password_confirmation = ''"
+          />
+          <small v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</small>
+        </div>
       </div>
     </template>
 
@@ -90,11 +88,13 @@ const setPassword = () => {
       </ActionMessage>
 
       <Button
+        type="submit"
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
-      >
-        Save
-      </Button>
+        label="Save"
+        icon="pi pi-check"
+      />
     </template>
   </FormSection>
 </template>
+
