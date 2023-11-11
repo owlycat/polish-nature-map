@@ -2,19 +2,20 @@
 
 namespace App\Importers;
 
-use App\Events\GeojsonFeatureImporterRunEvent;
 use App\Models\Category;
+use App\Models\Embeddable\Coordinates;
 use App\Models\SpatialFeature;
 use Illuminate\Support\Facades\DB;
-use App\Models\Embeddable\Coordinates;
 
 abstract class GeojsonFeaturesImporter
 {
-    public function getCategoryName(): string {
+    public function getCategoryName(): string
+    {
         return static::CATEGORY_NAME;
     }
 
-    public function run(): void{
+    public function run(): void
+    {
         try {
             DB::beginTransaction();
 
@@ -24,10 +25,10 @@ abstract class GeojsonFeaturesImporter
 
             foreach ($features['features'] as $feature) {
                 $spatialFeature = SpatialFeature::updateOrCreate(
-                    ["name" => $feature['properties']['name']],
+                    ['name' => $feature['properties']['name']],
                     [
-                        "_geo" => Coordinates::fromArray($feature['geometry']['coordinates']),
-                        "category_id" => $category->id,
+                        '_geo' => Coordinates::fromArray($feature['geometry']['coordinates']),
+                        'category_id' => $category->id,
                     ]
                 );
             }

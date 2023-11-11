@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use App\Exceptions\InvalidGeometryException;
-use Tests\TestCase;
 use PointCentroid;
+use Tests\TestCase;
 
 class PointCentroidTest extends TestCase
 {
@@ -68,7 +66,7 @@ class PointCentroidTest extends TestCase
 
         $result = PointCentroid::calculateFromGeometry($point);
 
-        $this->assertEquals($point["coordinates"], $result);
+        $this->assertEquals($point['coordinates'], $result);
     }
 
     public function test_exception_no_geometry(): void
@@ -92,6 +90,6 @@ class PointCentroidTest extends TestCase
     public function test_exception_invalid_geometry(): void
     {
         $this->expectException(InvalidGeometryException::class);
-        $result = PointCentroid::calculateFromGeometry(["invalid geometry"]);
+        $result = PointCentroid::calculateFromGeometry(['invalid geometry']);
     }
 }

@@ -1,20 +1,22 @@
 <?php
+
 namespace App\Helpers;
 
-use geoPHP;
 use App\Exceptions\InvalidGeometryException;
-use Illuminate\Support\Facades\Validator;
 use App\Rules\GeometryRule;
+use geoPHP;
+use Illuminate\Support\Facades\Validator;
 
 class PointCentroidHelper
 {
     /**
      * Calculates the centroid of a geometry.
      *
-     * @param float[] $geometry The geometry to calculate the centroid for, a property with type and coordinates.
+     * @param  float[]  $geometry The geometry to calculate the centroid for, a property with type and coordinates.
      * @return float[] The centroid of the geometry, represented as an array with two float values.
      */
-    function calculateFromGeometry(array $geometry) : array{
+    public function calculateFromGeometry(array $geometry): array
+    {
         $validatorGeometry = Validator::make(['geometry' => $geometry], [
             'geometry' => new GeometryRule,
         ]);

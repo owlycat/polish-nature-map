@@ -2,19 +2,20 @@
 
 namespace App\DataSources;
 
-use App\DataSources\DataSource;
-use Illuminate\Support\Facades\Http;
 use App\Exceptions\CouldNotFetchDataException;
+use Illuminate\Support\Facades\Http;
 
-class GDOSDataSource extends DataSource {
-
+class GDOSDataSource extends DataSource
+{
     protected string $name = 'Usługa pobierania (Web Feature Service) Generalnej Dyrekcji Ochrony Środowiska';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct($this->name);
     }
 
-    public function getData(mixed $data = null): array {
+    public function getData(mixed $data = null): array
+    {
 
         $url = 'https://sdi.gdos.gov.pl/wfs';
 
@@ -28,8 +29,8 @@ class GDOSDataSource extends DataSource {
 
         try {
             $response = Http::withoutVerifying()->retry(3, 100)
-            ->timeout(10)
-            ->get($url, $params);
+                ->timeout(10)
+                ->get($url, $params);
 
             if ($response->successful()) {
                 return $response->json();

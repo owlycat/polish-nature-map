@@ -2,13 +2,14 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
 use App\Roles\AdminRole;
+use Illuminate\Console\Command;
 
 class GrantAdminRoleCommand extends Command
 {
     protected $signature = 'user:admin {user}';
+
     protected $description = 'Make a user an admin';
 
     public function handle()
@@ -17,8 +18,9 @@ class GrantAdminRoleCommand extends Command
 
         $user = User::where('email', $userIdentifier)->orWhere('id', $userIdentifier)->first();
 
-        if (!$user) {
+        if (! $user) {
             $this->error("No user found with ID or email: $userIdentifier");
+
             return;
         }
 

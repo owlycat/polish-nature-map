@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Illuminate\Foundation\Application;
-use App\Models\SpatialFeature;
 use App\Models\Category;
+use App\Models\SpatialFeature;
+use Inertia\Inertia;
 
 class WelcomeController extends Controller
 {
@@ -15,25 +13,25 @@ class WelcomeController extends Controller
         $categoriesWithGeoJSON = Category::all()->map(function ($category) {
             $geojson = SpatialFeature::where('category_id', $category->id)
                 ->get()
-                ->map(fn($feature) => [
+                ->map(fn ($feature) => [
                     'type' => 'Feature',
                     'properties' => ['name' => $feature->name],
                     'geometry' => [
                         'type' => 'Point',
-                        'coordinates' => $feature->_geo
+                        'coordinates' => $feature->_geo,
                     ],
                 ])
                 ->toArray();
-        
+
             return [
                 'geojson' => ['type' => 'FeatureCollection', 'features' => $geojson],
                 'category' => $category->name,
-                'color' => '#' . substr(md5($category->name), 0, 6),
+                'color' => '#'.substr(md5($category->name), 0, 6),
             ];
         })->toArray();
 
         return Inertia::render('Welcome', [
-            'geojson' => $categoriesWithGeoJSON
+            'geojson' => $categoriesWithGeoJSON,
         ]);
     }
 }

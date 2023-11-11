@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Importers\NationalParkImporter;
 use App\Importers\LandscapeParkImporter;
+use App\Importers\NationalParkImporter;
+use Illuminate\Support\ServiceProvider;
 
 class ImportersServiceProvider extends ServiceProvider
 {
