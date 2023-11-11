@@ -6,7 +6,10 @@ return [
 
     'prefix' => env('SCOUT_PREFIX', ''),
 
-    'queue' => env('SCOUT_QUEUE', false),
+    'queue' => [
+        'connection' => 'redis',
+        'queue' => 'scout'
+    ],
 
     'after_commit' => false,
 
