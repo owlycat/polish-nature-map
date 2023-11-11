@@ -6,10 +6,12 @@ use App\Models\Embeddable\Coordinates;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use \Laravel\Scout\Searchable;
 
 class SpatialFeature extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $casts = [
         'name' => 'string',
@@ -25,5 +27,10 @@ class SpatialFeature extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'features_index';
     }
 }
