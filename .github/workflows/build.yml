@@ -1,4 +1,4 @@
-name: PHP Lint and Tests
+name: Build application and test
 
 on:
   pull_request:
