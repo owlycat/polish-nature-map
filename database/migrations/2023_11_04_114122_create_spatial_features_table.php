@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->json('_geo');
-            $table->foreignId('category_id')->constrained()->index();
+            $table->foreignId('category_id')->constrained();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
