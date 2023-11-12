@@ -21,6 +21,7 @@ class SpatialFeature extends Model
     protected $fillable = [
         'name',
         '_geo',
+        'description',
         'category_id',
     ];
 
@@ -33,6 +34,7 @@ class SpatialFeature extends Model
     {
         return [
             'name' => $this->name,
+            'description' => $this->description,
             '_geo' => $this->_geo,
         ];
     }
