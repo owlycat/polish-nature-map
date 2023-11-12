@@ -2,15 +2,13 @@
 
 namespace App\Jobs;
 
+use App\Helpers\WikipediaSearchHelper;
+use App\Models\SpatialFeature;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Helpers\WikipediaSearchHelper;
-use App\Models\SpatialFeature;
-
 
 class UpdatePlacesDescriptionsJob implements ShouldQueue
 {
@@ -35,9 +33,9 @@ class UpdatePlacesDescriptionsJob implements ShouldQueue
 
         foreach ($spatialFeatures as $spatialFeature) {
             $data = $wikipediaSearch->query($spatialFeature->name);
-    
+
             $spatialFeature->description = $data;
-    
+
             $spatialFeature->save();
         }
     }

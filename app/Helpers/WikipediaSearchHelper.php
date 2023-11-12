@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\Http;
@@ -52,14 +53,14 @@ class WikipediaSearchHelper
     {
         $exactMatchExtract = $this->getExtractByTitle($query);
 
-        if (!empty($exactMatchExtract)) {
+        if (! empty($exactMatchExtract)) {
             return $exactMatchExtract;
         }
 
         $searchResults = $this->getSearchResults($query);
 
         if (empty($searchResults['query']['search'])) {
-            return null; 
+            return null;
         }
 
         $bestMatch = $this->findBestMatch($query, $searchResults['query']['search']);
@@ -69,6 +70,7 @@ class WikipediaSearchHelper
         }
 
         $extract = $this->getExtractByTitle($bestMatch['title']);
+
         return $extract;
     }
 
