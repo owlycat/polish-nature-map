@@ -18,4 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/feature/{id}', [SpatialFeatureController::class, 'show']);
+Route::get('/features/id/{id}', [SpatialFeatureController::class, 'show']);
