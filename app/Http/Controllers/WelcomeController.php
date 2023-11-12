@@ -10,8 +10,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $search = request()->query('search') ?? '';
-        $features = SpatialFeature::search($search)->paginate(20);
+        $features = SpatialFeature::paginate(20);
 
         return Inertia::render('Welcome', [
             'geojson' => fn () => $this->getGeojson(),

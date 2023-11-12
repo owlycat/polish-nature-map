@@ -29,6 +29,14 @@ class SpatialFeature extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            '_geo' => $this->_geo,
+        ];
+    }
+
     public function searchableAs(): string
     {
         return 'features_index';

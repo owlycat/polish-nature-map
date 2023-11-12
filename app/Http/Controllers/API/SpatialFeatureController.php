@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\SpatialFeature;
+use App\Http\Controllers\Controller;
 
 class SpatialFeatureController extends Controller
 {

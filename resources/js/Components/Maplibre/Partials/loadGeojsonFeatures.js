@@ -77,7 +77,7 @@ export function loadGeojsonFeatures(map, geojson, sourceName, color) {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const name = e.features[0].properties.name;
       
-        axios.get(`/feature/${name}`, {only: ['feature']}).then(response => {
+        axios.get(`/api/feature/${name}`, {only: ['feature']}).then(response => {
           new maplibregl.Popup()
             .setLngLat(coordinates)
             .setHTML(response.data.name)
