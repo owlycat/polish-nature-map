@@ -8,19 +8,11 @@ class WikipediaSearchHelper
 {
     protected $apiUrl = 'https://pl.wikipedia.org/w/api.php';
 
-    protected function getSearchResults($query, $limit = 5)
+    protected function performRequest($params)
     {
-        $params = [
-            'action' => 'query',
-            'list' => 'search',
-            'format' => 'json',
-            'srsearch' => $query,
-            'srlimit' => $limit,
-        ];
-
-        $response = $this->performRequest($params);
-
-        return json_decode($response->getBody(), true);
+        return Http::withoutVerifying()->retry(3, 100)
+            ->timeout(10)
+            ->get($this->apiUrl, $params);
     }
 
     protected function getExtractByTitle($title)
@@ -42,11 +34,36 @@ class WikipediaSearchHelper
         return isset($page['extract']) ? $page['extract'] : null;
     }
 
-    protected function performRequest($params)
+    protected function getSearchResults($query, $limit = 5)
     {
-        return Http::withoutVerifying()->retry(3, 100)
-            ->timeout(10)
-            ->get($this->apiUrl, $params);
+        $params = [
+            'action' => 'query',
+            'list' => 'search',
+            'format' => 'json',
+            'srsearch' => $query,
+            'srlimit' => $limit,
+        ];
+
+        $response = $this->performRequest($params);
+
+        return json_decode($response->getBody(), true);
+    }
+
+    protected function findBestMatch($query, $results)
+    {
+        $bestMatch = null;
+        $maxSimilarity = 0;
+
+        foreach ($results as $result) {
+            similar_text($result['title'], $query, $similarity);
+
+            if ($similarity >= 90 && $similarity > $maxSimilarity) {
+                $maxSimilarity = $similarity;
+                $bestMatch = $result;
+            }
+        }
+
+        return $bestMatch;
     }
 
     public function query($query): ?string
@@ -72,22 +89,5 @@ class WikipediaSearchHelper
         $extract = $this->getExtractByTitle($bestMatch['title']);
 
         return $extract;
-    }
-
-    protected function findBestMatch($query, $results)
-    {
-        $bestMatch = null;
-        $maxSimilarity = 0;
-
-        foreach ($results as $result) {
-            similar_text($result['title'], $query, $similarity);
-
-            if ($similarity >= 90 && $similarity > $maxSimilarity) {
-                $maxSimilarity = $similarity;
-                $bestMatch = $result;
-            }
-        }
-
-        return $bestMatch;
     }
 }
