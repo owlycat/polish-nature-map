@@ -3,11 +3,14 @@
 use App\Enums\Permissions;
 use App\Http\Controllers\Admin\ImporterController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\SpatialFeatureController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('index');
+
+Route::get('/feature/{id}', [SpatialFeatureController::class, 'show']);
 
 Route::middleware([
     'auth:sanctum',

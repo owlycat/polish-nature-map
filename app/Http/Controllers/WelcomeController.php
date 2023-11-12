@@ -10,12 +10,22 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $categoriesWithGeoJSON = Category::all()->map(function ($category) {
-            $geojson = SpatialFeature::where('category_id', $category->id)
+        $search = request()->query('search') ?? '';
+        $features = SpatialFeature::search($search)->paginate(20);
+
+        return Inertia::render('Welcome', [
+            'geojson' => fn () => $this->getGeojson(),
+            'features' => $features,
+        ]);
+    }
+
+
+    private function getGeojson(): array{
+        $featureCollection = SpatialFeature::query()
                 ->get()
                 ->map(fn ($feature) => [
                     'type' => 'Feature',
-                    'properties' => ['name' => $feature->name],
+                    'properties' => ['name' => $feature->id],
                     'geometry' => [
                         'type' => 'Point',
                         'coordinates' => $feature->_geo,
@@ -23,15 +33,6 @@ class WelcomeController extends Controller
                 ])
                 ->toArray();
 
-            return [
-                'geojson' => ['type' => 'FeatureCollection', 'features' => $geojson],
-                'category' => $category->name,
-                'color' => '#'.substr(md5($category->name), 0, 6),
-            ];
-        })->toArray();
-
-        return Inertia::render('Welcome', [
-            'geojson' => $categoriesWithGeoJSON,
-        ]);
+        return ['type' => 'FeatureCollection', 'features' => $featureCollection];
     }
 }

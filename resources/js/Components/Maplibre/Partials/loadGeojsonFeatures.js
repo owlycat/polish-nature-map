@@ -76,18 +76,12 @@ export function loadGeojsonFeatures(map, geojson, sourceName, color) {
     map.on('click', `unclustered-point-${sourceName}`, (e) => {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const name = e.features[0].properties.name;
-
-
-
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        new maplibregl.Popup()
+      
+        axios.get(`/feature/${name}`, {only: ['feature']}).then(response => {
+          new maplibregl.Popup()
             .setLngLat(coordinates)
-            .setHTML(
-                `${name}`
-            )
+            .setHTML(response.data.name)
             .addTo(map);
-    });
+        });
+      });
 }

@@ -11,8 +11,8 @@ const MAPLIBRE_TOKEN = import.meta.env.VITE_MAPLIBRE_TOKEN;
 const mapContainer = ref(null);
 const map = ref(null);
 
-const { mapData } = defineProps({
-    mapData: JSON,
+const props = defineProps({
+    geojson: Object,
 });
 
 const LoadingStates = {
@@ -42,10 +42,8 @@ function createMap() {
     map.value.on('load', () => {
         currentLoadingState.value = LoadingStates.PopulatingMap;
         
-        for (let feature of mapData) {
-            loadGeojsonFeatures(map.value, feature.geojson, feature.category, feature.color);
-        }
-        
+        loadGeojsonFeatures(map.value, props.geojson, 'all', '#10b981');
+
         currentLoadingState.value = LoadingStates.RenderingMap;
         addControls(map.value);
 
