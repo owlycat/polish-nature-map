@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->json('_geo');
             $table->foreignId('category_id')->constrained();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
