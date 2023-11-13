@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\SpatialFeature;
 use Inertia\Inertia;
 
@@ -11,6 +12,7 @@ class WelcomeController extends Controller
     {
         return Inertia::render('Welcome', [
             'geojson' => fn () => $this->getGeojson(),
+            'categories' => fn () => Category::all(['name', 'id']),
         ]);
     }
 
