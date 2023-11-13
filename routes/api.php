@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/features/id/{id}', [SpatialFeatureController::class, 'show']);
+Route::get('/features/search', [SpatialFeatureController::class, 'search']);
+Route::get('/features/filterIds', [SpatialFeatureController::class, 'filterIds']);

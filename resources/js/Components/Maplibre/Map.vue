@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
 import { addControls } from './Partials/mapControls.js';
-import { loadGeojsonFeatures } from './Partials/loadGeojsonFeatures.js';
+import { loadGeojsonFeatures, filterPoints } from './Partials/geojsonFeatures.js';
 import ProgressSpinner from 'primevue/progressspinner';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -14,6 +14,14 @@ const map = ref(null);
 const props = defineProps({
     geojson: Object,
 });
+
+const filterMap = (ids) => {
+    filterPoints(map.value, ids);
+};
+
+defineExpose({
+    filterMap,
+})
 
 const LoadingStates = {
     FetchingData: 'Fetching Data...',
@@ -41,8 +49,8 @@ function createMap() {
 
     map.value.on('load', () => {
         currentLoadingState.value = LoadingStates.PopulatingMap;
-        
-        loadGeojsonFeatures(map.value, props.geojson, 'all', '#10b981');
+
+        loadGeojsonFeatures(map.value, props.geojson, '#10b981');
 
         currentLoadingState.value = LoadingStates.RenderingMap;
         addControls(map.value);

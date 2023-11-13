@@ -1,15 +1,57 @@
 <script setup>
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-import { Link } from '@inertiajs/vue3';
+import InfiniteLoading from "v3-infinite-loading";
+import ProgressSpinner from 'primevue/progressspinner';
+import "v3-infinite-loading/lib/style.css";
+import { ref } from 'vue';
+import _ from 'lodash';
+import axios from 'axios';
 
-const props = defineProps({
-    features: Object,
-});
+let nextUrl = '/api/features/search/';
+let places = ref([]);
+const query = ref('');
+const lazyLoaderShow = ref(true);
 
-const previousPage = props.features.links[0];
-const nextPage = props.features.links[props.features.links.length - 1]
+const emit = defineEmits(['filter:geojson'])
 
+const search = () => {
+    places.value = [];
+    nextUrl = '/api/features/search/';
+    lazyLoaderShow.value = true;
+
+    axios.get("/api/features/filterIds/", { params: { query: query.value } }).then(response => {
+        emit('filter:geojson', response.data);
+    });
+}
+
+const debounceSearch = _.debounce(search, 500);
+
+function getData(response){
+    const json = response.data
+    places.value.push(...json.data);
+    nextUrl = json.next_page_url;
+}
+
+const load = async $state => {
+    if(nextUrl === null) {
+        $state.complete();
+        lazyLoaderShow.value = false;
+        return;
+    }
+
+    try {
+    const url = nextUrl === '/api/features/search/' ? `/api/features/search/` : nextUrl;
+    const params = nextUrl === '/api/features/search/' ? { page: 1, query: query.value } : {};
+
+    axios.get(url, { params }).then(response => {
+        getData(response);
+        $state.loaded();
+    });
+    } catch (error) {
+        $state.error();
+    }
+};
 </script>
 
 <template>
@@ -19,13 +61,15 @@ const nextPage = props.features.links[props.features.links.length - 1]
         <i class="pi pi-search" />
         <InputText
           class="w-full"
+          v-model="query"
           placeholder="Search"
+          @input="debounceSearch"
         />
       </span>
     </div>
     <div class="overflow-y-auto flex-grow max-h-fit">
       <div
-        v-for="(feature, featureIndex) in props.features.data"
+        v-for="(feature, featureIndex) in places"
         :key="featureIndex"
       >
         <div class="flex items-center bg-white rounded-lg shadow-md border overflow-hidden hover:bg-surface-100 p-3">
@@ -40,7 +84,7 @@ const nextPage = props.features.links[props.features.links.length - 1]
               {{ feature.name }}
             </h3>
             <p class="text-sm text-gray-600">
-              {{ feature.category_id }}
+              {{ feature.category_name }}
             </p>
           </div>
 
@@ -51,58 +95,15 @@ const nextPage = props.features.links[props.features.links.length - 1]
           </div>
         </div>
       </div>
-    </div>
-    <div class="sticky bottom-0 z-10">
-      <div class="flex gap-1">
-        <Link
-          v-if="previousPage.url"
-          class="flex-1"
-          :href="previousPage.url"
-          :only="['features']"
-        >
-          <Button
-            class="w-full"
-            label="Previous"
-            icon="pi pi-angle-left"
-            size="small"
-            outlined
-          />
-        </Link>
-        <Button
-          v-else
-          class="flex-1"
-          label="Previous"
-          icon="pi pi-angle-left"
-          size="small"
-          disabled
-          outlined
-        />
-        <Link
-          v-if="nextPage.url"
-          class="flex-1"
-          :href="nextPage.url"
-          :disabled="nextPage.active == false"
-          :only="['features']"
-        >
-          <Button
-            class="w-full"
-            label="Next"
-            icon="pi pi-angle-right"
-            size="small"
-            icon-pos="right"
-            outlined
-          />
-        </Link>
-        <Button
-          v-else
-          class="flex-1"
-          label="Next"
-          icon="pi pi-angle-right"
-          size="small"
-          icon-pos="right"
-          disabled
-          outlined
-        />
+      <InfiniteLoading v-if="lazyLoaderShow" @infinite="load">
+        <template #spinner>
+          <div class="flex justify-center p-2">
+            <ProgressSpinner aria-label="Loading" class="h-10 w-10"/>
+          </div>
+        </template>
+      </InfiniteLoading>
+      <div class="grid p-2 justify-items-center flex-grow max-h-fit" v-else>
+        <div>No more results.</div>
       </div>
     </div>
   </div>

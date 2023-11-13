@@ -10,11 +10,8 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $features = SpatialFeature::paginate(20);
-
         return Inertia::render('Welcome', [
             'geojson' => fn () => $this->getGeojson(),
-            'features' => $features,
         ]);
     }
 
@@ -24,7 +21,8 @@ class WelcomeController extends Controller
                 ->get()
                 ->map(fn ($feature) => [
                     'type' => 'Feature',
-                    'properties' => ['name' => $feature->id],
+                    'properties' => ['id' => $feature->id],
+                    'id' => $feature->id,
                     'geometry' => [
                         'type' => 'Point',
                         'coordinates' => $feature->_geo,
