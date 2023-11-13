@@ -35,8 +35,8 @@ export function loadGeojsonFeatures(map, geojson, color) {
         source: 'all',
         paint: {
             'circle-color': color,
-            'circle-radius': 4,
-            'circle-opacity': 0.6,
+            'circle-radius': 5,
+            'circle-opacity': 0.4,
         },
         filter: ['in', 'id']
     });
