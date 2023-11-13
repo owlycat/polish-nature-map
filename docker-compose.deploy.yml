@@ -39,11 +39,7 @@ services:
       - "3306"
     restart: unless-stopped
     healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - '-p${DB_PASSWORD}'
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
       retries: 3
       timeout: 5s
 
@@ -57,10 +53,7 @@ services:
       - nature-deploy-prod
     restart: unless-stopped
     healthcheck:
-      test:
-        - CMD
-        - redis-cli
-        - ping
+      test: ["CMD", "redis-cli", "ping"]
       retries: 3
       timeout: 5s
 
@@ -75,12 +68,7 @@ services:
     networks:
       - nature-deploy-prod
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - '--no-verbose'
-        - '--spider'
-        - 'http://localhost:7700/health'
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:7700/health"]
       retries: 3
       timeout: 5s
 
