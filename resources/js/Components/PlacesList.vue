@@ -1,9 +1,9 @@
 <script setup>
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
-import InfiniteLoading from "v3-infinite-loading";
+import InfiniteLoading from 'v3-infinite-loading';
 import ProgressSpinner from 'primevue/progressspinner';
-import "v3-infinite-loading/lib/style.css";
+import 'v3-infinite-loading/lib/style.css';
 import { ref } from 'vue';
 import _ from 'lodash';
 import axios from 'axios';
@@ -20,7 +20,7 @@ const search = () => {
     nextUrl = '/api/features/search/';
     lazyLoaderShow.value = true;
 
-    axios.get("/api/features/filterIds/", { params: { query: query.value } }).then(response => {
+    axios.get('/api/features/filterIds/', { params: { query: query.value } }).then(response => {
         emit('filter:geojson', response.data);
     });
 }
@@ -41,7 +41,7 @@ const load = async $state => {
     }
 
     try {
-    const url = nextUrl === '/api/features/search/' ? `/api/features/search/` : nextUrl;
+    const url = nextUrl === '/api/features/search/' ? '/api/features/search/' : nextUrl;
     const params = nextUrl === '/api/features/search/' ? { page: 1, query: query.value } : {};
 
     axios.get(url, { params }).then(response => {
@@ -60,8 +60,8 @@ const load = async $state => {
       <span class="p-input-icon-left w-full">
         <i class="pi pi-search" />
         <InputText
-          class="w-full"
           v-model="query"
+          class="w-full"
           placeholder="Search"
           @input="debounceSearch"
         />
@@ -89,20 +89,29 @@ const load = async $state => {
           </div>
 
           <div>
-            <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 text-xs rounded transition-colors duration-200">
+            <Button class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 text-xs rounded transition-colors duration-200">
               Visited
-            </button>
+            </Button>
           </div>
         </div>
       </div>
-      <InfiniteLoading v-if="lazyLoaderShow" @infinite="load">
+      <InfiniteLoading
+        v-if="lazyLoaderShow"
+        @infinite="load"
+      >
         <template #spinner>
           <div class="flex justify-center p-2">
-            <ProgressSpinner aria-label="Loading" class="h-10 w-10"/>
+            <ProgressSpinner
+              aria-label="Loading"
+              class="h-10 w-10"
+            />
           </div>
         </template>
       </InfiniteLoading>
-      <div class="grid p-2 justify-items-center flex-grow max-h-fit" v-else>
+      <div
+        v-else
+        class="grid p-2 justify-items-center flex-grow max-h-fit"
+      >
         <div>No more results.</div>
       </div>
     </div>

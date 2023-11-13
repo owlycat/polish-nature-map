@@ -8,7 +8,7 @@ return [
 
     'queue' => [
         'connection' => 'redis',
-        'queue' => 'scout'
+        'queue' => 'scout',
     ],
 
     'after_commit' => false,

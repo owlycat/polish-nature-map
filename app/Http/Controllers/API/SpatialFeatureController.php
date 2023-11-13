@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\SpatialFeature;
 use App\Http\Controllers\Controller;
+use App\Models\SpatialFeature;
 
 class SpatialFeatureController extends Controller
 {
@@ -14,7 +14,8 @@ class SpatialFeatureController extends Controller
         return $feature;
     }
 
-    public function search(){
+    public function search()
+    {
         $query = request()->input('query') ?? '';
 
         $results = SpatialFeature::search($query)->paginate(20);

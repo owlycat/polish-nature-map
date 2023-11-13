@@ -39,7 +39,10 @@ function onDataUpdate(data) {
       </button>
     </div>
     <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
-      <Map ref="map" :geojson="props.geojson" />
+      <Map
+        ref="map"
+        :geojson="props.geojson"
+      />
     </div>
     <button
       v-show="!isListVisible"

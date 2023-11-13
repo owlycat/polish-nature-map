@@ -11,7 +11,7 @@ function buildTooltip(place) {
 
 export function loadGeojsonFeatures(map, geojson, color) {
     const ids = geojson.features.map(feature => feature.properties.id);
-    map.addSource("all", {
+    map.addSource('all', {
         type: 'geojson',
         data: geojson,
     });
@@ -19,7 +19,7 @@ export function loadGeojsonFeatures(map, geojson, color) {
     map.addLayer({
         id: 'natural-features-filter-match',
         type: 'circle',
-        source: "all",
+        source: 'all',
         paint: {
             'circle-color': color,
             'circle-radius': 8,
@@ -32,7 +32,7 @@ export function loadGeojsonFeatures(map, geojson, color) {
     map.addLayer({
         id: 'natural-features-filter-no-match',
         type: 'circle',
-        source: "all",
+        source: 'all',
         paint: {
             'circle-color': color,
             'circle-radius': 4,
