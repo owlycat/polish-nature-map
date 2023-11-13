@@ -1,0 +1,120 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ../config/deploy
+      dockerfile: Dockerfile
+    working_dir: /application
+    volumes:
+      - ../config/deploy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ../config/deploy/php.ini:/usr/local/etc/php/conf.d/zzz-overrides.ini:ro
+      - ../config/deploy/php-fpm.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf:ro
+      - ../config/deploy/supervisord.conf:/etc/supervisor/custom-supervisord.conf:ro
+      - .:/application
+    ports:
+      - ${DOCKER_APP_HOST_PORT:-80}:80
+      - 443:443
+    networks:
+      - nature-deploy-prod
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - nature-deploy-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    networks:
+      - nature-deploy-prod
+    ports:
+      - ${DOCKER_DEV_DB_EXTERNAL_PORT:-3306}:3306
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - mysqladmin
+        - ping
+        - '-p${DB_PASSWORD}'
+      retries: 3
+      timeout: 5s
+    
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - ${FORWARD_REDIS_PORT:-6379}:6379
+    volumes:
+      - nature-deploy-redis-data:/data
+    networks:
+      - nature-deploy-prod
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      retries: 3
+      timeout: 5s
+
+  meilisearch:
+    image: 'getmeili/meilisearch:latest'
+    ports:
+      - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
+    environment:
+      MEILI_NO_ANALYTICS: '${MEILISEARCH_NO_ANALYTICS:-false}'
+    volumes:
+      - 'nature-deploy-meilisearch-data:/meili_data'
+    networks:
+      - nature-deploy-prod
+    healthcheck:
+      test:
+        - CMD
+        - wget
+        - '--no-verbose'
+        - '--spider'
+        - 'http://localhost:7700/health'
+      retries: 3
+      timeout: 5s
+
+  soketi:
+    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    command: ['soketi', 'start']
+    environment:
+      SOKETI_DEBUG: '1'
+      SOKETI_METRICS_SERVER_PORT: ${SOKETI_METRICS_SERVER_PORT:-9601}
+      SOKETI_DEFAULT_APP_ID: ${PUSHER_APP_ID}
+      SOKETI_DEFAULT_APP_KEY: ${PUSHER_APP_KEY}
+      SOKETI_DEFAULT_APP_SECRET: ${PUSHER_APP_SECRET}
+      SOKETI_DB_REDIS_HOST: ${SOKETI_DB_REDIS_HOST}
+      SOKETI_DB_REDIS_PASSWORD: ${SOKETI_DB_REDIS_PASSWORD}
+      SOKETI_DB_REDIS_PORT: ${SOKETI_DB_REDIS_PORT:-6379}
+      SOKETI_DB_REDIS_DB: ${SOKETI_DB_REDIS_DB:-0}
+    ports:
+      - '${SOKETI_PORT:-6001}:${SOKETI_PORT:-6001}'
+      - '${SOKETI_METRICS_SERVER_PORT:-9601}:${SOKETI_METRICS_SERVER_PORT:-9601}'
+    depends_on:
+      - redis
+    networks:
+      - nature-deploy-prod
+
+networks:
+  nature-deploy-prod:
+    driver: bridge
+    external: false
+    name: nature-deploy-prod
+    
+volumes:
+  nature-deploy-mysql-data:
+    name: nature-deploy-mysql-data
+  nature-deploy-redis-data:
+    name: nature-deploy-redis-data
+  nature-deploy-meilisearch-data:
+    name: nature-deploy-meilisearch-data
