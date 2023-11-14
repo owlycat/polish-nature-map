@@ -28,7 +28,7 @@ const handleShowCoordinates = (coordinates) => {
       <PlacesList
         :categories="props.categories"
         @filter:geojson="onDataUpdate"
-        @showCoordinates="handleShowCoordinates"
+        @show-coordinates="handleShowCoordinates"
       />
     </div>
     <div class="w-full h-2/5 md:h-full">

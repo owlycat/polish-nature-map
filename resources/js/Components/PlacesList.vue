@@ -180,7 +180,12 @@ const handleShowCoordinates = (coordinates) => {
 </script>
 
 <template>
-  <PlaceInformationDialog :visible="isDialogVisible" :place="selectedPlace" @update:visible="isDialogVisible = $event" @showCoordinates="handleShowCoordinates" />
+  <PlaceInformationDialog
+    :visible="isDialogVisible"
+    :place="selectedPlace"
+    @update:visible="isDialogVisible = $event"
+    @show-coordinates="handleShowCoordinates"
+  />
   <div class="bg-white rounded border md:max-w-md w-full md:w-screen flex flex-col h-full">
     <div class="flex flex-row sticky top-0 z-10">
       <span class="p-input-icon-left w-full">
@@ -246,13 +251,16 @@ const handleShowCoordinates = (coordinates) => {
       >
         <div class="flex items-center bg-white rounded-lg shadow-md border overflow-hidden hover:bg-surface-100 p-3">
           <img
-            @click="handleItemClick(feature)"
             class="h-20 w-20 object-cover rounded-lg opacity-60 cursor-pointer"
             src="/images/place-default-thumbnail.png"
             alt="Place"
+            @click="handleItemClick(feature)"
           >
 
-          <div @click="handleItemClick(feature)" class="flex-grow p-2 cursor-pointer">
+          <div
+            class="flex-grow p-2 cursor-pointer"
+            @click="handleItemClick(feature)"
+          >
             <h3 class="font-semibold text-lg">
               {{ feature.name }}
             </h3>
