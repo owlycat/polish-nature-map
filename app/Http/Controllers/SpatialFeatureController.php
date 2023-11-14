@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\SpatialFeature;
@@ -17,14 +17,16 @@ class SpatialFeatureController extends Controller
     public function search()
     {
         $filters = $this->getInputs(request());
+        $user = auth()->user();
 
         $results = $this->searchFeatures($filters)->paginate(20);
 
-        $results->setCollection($results->getCollection()->load('category')->map(function ($item) {
+        $results->setCollection($results->getCollection()->load('category')->map(function ($item) use ($user) {
             return [
                 'id' => $item->id,
                 'category_name' => $item->category->name,
                 'name' => $item->name,
+                'visited' => $user ? $user->hasVisited($item->id) : false,
             ];
         }));
 
@@ -85,12 +87,12 @@ class SpatialFeatureController extends Controller
         $search = $filters['query'];
         $categories = $filters['categories'];
 
-        $results = SpatialFeature::search($search)->query(function ($builder) use ($categories) {
-            if (! empty($categories)) {
-                $categoryIds = array_column($categories, 'id');
-                $builder->whereIn('category_id', $categoryIds);
-            }
-        });
+        $results = SpatialFeature::search($search);
+
+        if (! empty($categories)) {
+            $categoryNames = array_column($categories, 'name');
+            $results->whereIn('category', $categoryNames);
+        }
 
         return $results;
     }

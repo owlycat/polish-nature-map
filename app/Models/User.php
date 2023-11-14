@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -75,5 +76,15 @@ class User extends Authenticatable
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
             : $this->getPhotoUrl();
+    }
+
+    public function visitedPlaces(): BelongsToMany
+    {
+        return $this->belongsToMany(SpatialFeature::class, 'visited_places')->withTimestamps();
+    }
+
+    public function hasVisited($placeId)
+    {
+        return $this->visitedPlaces()->where('spatial_feature_id', $placeId)->exists();
     }
 }

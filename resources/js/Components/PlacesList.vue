@@ -10,8 +10,11 @@ import { ref, computed } from 'vue';
 import _ from 'lodash';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
+import { useToast } from 'primevue/usetoast';
 
-let nextUrl = '/api/features/search/';
+const toast = useToast();
+
+let nextUrl = '/features/search/';
 let places = ref([]);
 const query = ref('');
 const selectedCategories = ref([]);
@@ -41,10 +44,10 @@ const emit = defineEmits(['filter:geojson'])
 
 const search = () => {
     places.value = [];
-    nextUrl = '/api/features/search/';
+    nextUrl = '/features/search/';
     lazyLoaderShow.value = true;
 
-    axios.get('/api/features/filterIds/', {
+    axios.get('/features/filterIds/', {
         params: {
             query: query.value,
             categories: selectedCategories.value,
@@ -78,8 +81,8 @@ const load = async $state => {
     }
 
     try {
-    const url = nextUrl === '/api/features/search/' ? '/api/features/search/' : nextUrl;
-    const params = nextUrl === '/api/features/search/' ? {
+    const url = nextUrl === '/features/search/' ? '/features/search/' : nextUrl;
+    const params = nextUrl === '/features/search/' ? {
         page: 1,
         query: query.value,
         categories: selectedCategories.value,
@@ -107,6 +110,50 @@ const filterButtonIcon = computed(() => {
 const toggleFilter = () => {
     filterOpen.value = !filterOpen.value;
 };
+
+
+function visit(index, feature) {
+    axios.post(`/visits/${feature.id}`)
+        .then(response => {
+            places.value[index].visited = true;
+            toast.add({
+                severity: response.data.severity,
+                summary: response.data.title,
+                detail: response.data.message,
+                life: 3000,
+            });
+        })
+        .catch(error => {
+            toast.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `Failed to mark ${feature.name} as visited.`,
+                life: 3000,
+            });
+        });
+}
+
+function unvisit(index, feature) {
+    axios.delete(`/visits/${feature.id}`)
+        .then(response => {
+            places.value[index].visited = false;
+            toast.add({
+                severity: response.data.severity,
+                summary: response.data.title,
+                detail: response.data.message,
+                life: 3000,
+            });
+        })
+        .catch(error => {
+            toast.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `Failed to unvisit ${feature.name}.`,
+                life: 3000,
+            });
+        });
+}
+
 </script>
 
 <template>
@@ -190,9 +237,8 @@ const toggleFilter = () => {
           </div>
 
           <div>
-            <Button class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 text-xs rounded transition-colors duration-200">
-              Visited
-            </Button>
+            <Button v-if="feature.visited" @click="unvisit(featureIndex, feature)" icon="pi pi-bookmark" severity="success" rounded aria-label="Mark unvisited" />
+            <Button v-else icon="pi pi-bookmark" @click="visit(featureIndex, feature)" outlined severity="secondary" rounded aria-label="Mark visited" />
           </div>
         </div>
       </div>

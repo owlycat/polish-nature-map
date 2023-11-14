@@ -6,7 +6,9 @@ use App\Models\Embeddable\Coordinates;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Builder;
 
 class SpatialFeature extends Model
 {
@@ -30,17 +32,35 @@ class SpatialFeature extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function toSearchableArray(): array
+    public function visitors(): BelongsToMany
     {
-        return [
-            'name' => $this->name,
-            'description' => $this->description,
-            '_geo' => $this->_geo,
-        ];
+        return $this->belongsToMany(User::class, 'visited_places')->withTimestamps();
     }
 
     public function searchableAs(): string
     {
         return 'features_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'category' => $this->category->name,
+            'description' => $this->description,
+        ];
+    }
+
+    public function toFilterableArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'category' => $this->category->name,
+        ];
+    }
+
+    protected function makeAllSearchableUsing($query)
+    {
+        return $query->with("category");
     }
 }

@@ -45,7 +45,7 @@ export function loadGeojsonFeatures(map, geojson, color) {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const id = e.features[0].properties.id;
 
-        axios.get(`/api/features/id/${id}`).then(response => {
+        axios.get(`/features/id/${id}`).then(response => {
           const tooltip = buildTooltip(response.data);
           new maplibregl.Popup()
             .setLngLat(coordinates)

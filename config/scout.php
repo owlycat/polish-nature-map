@@ -1,4 +1,5 @@
 <?php
+use App\Models\SpatialFeature;
 
 return [
 
@@ -31,6 +32,9 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
+            SpatialFeature::class => [
+                'filterableAttributes'=> ['category', 'name'],
+            ],
         ],
     ],
 
