@@ -25,6 +25,10 @@ const closeDialog = () => {
                 <p class="m-0">
                         {{ place.description ? place.description : 'No description found' }}
                 </p>
+                <div class="mt-2 overflow-hidden overflow-ellipsis w-full" v-if="place.description_source">
+                    <span class="font-bold">Source: </span>
+                    <a :href="place.description_source" target="_blank" class="overflow-ellipsis overflow-hidden">{{ decodeURI(place.description_source) }}</a>
+                </div>
                 <div class="flex mt-4 flex-wrap gap-2 items-center">
                     <a :href="'https://www.google.com/search?q=' + place.name" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
                         <div class="flex gap-2 items-center">
