@@ -30,22 +30,28 @@ const closeDialog = () => {
                     <a :href="place.description_source" target="_blank" class="overflow-ellipsis overflow-hidden">{{ decodeURI(place.description_source) }}</a>
                 </div>
                 <div class="flex mt-4 flex-wrap gap-2 items-center">
-                    <a :href="'https://www.google.com/search?q=' + place.name" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                    <a :href="'https://www.google.com/search?q=' + place.name" target="_blank" class="border border-blue-500 hover:bg-blue-50 text-blue-500 font-semibold py-2 px-4 rounded">
                         <div class="flex gap-2 items-center">
                             <i class="pi pi-google"/>
                             <span>Google more information</span>
                         </div>
                     </a>
-                    <a target="_blank" :href="`https://www.google.com/maps/place/${place._geo[1]},${place._geo[0]}/@${place._geo[1]},${place._geo[0]},9z`" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-4 rounded">
-                        <div class="flex gap-2 items-center">
-                            <i class="pi pi-map-marker"/>
-                            <span>Show on Google Maps</span>
-                        </div>
-                    </a>
                 </div>
                 
             <template #footer>
-                <Button label="Close" icon="pi pi-check" autofocus @click="closeDialog" />
+                <button type="button" class="mt-3 border border-emerald-500 bg-emerald-500 text-white font-bold py-2 px-3 rounded text-sm" @click="closeDialog">
+                    <div class="flex gap-2 items-center">
+                        <i class="pi pi-map-marker"/>
+                        <span>Show on map</span>
+                    </div>
+                </button>
+                <button type="button" class="mt-3 border border-emerald-500 text-emerald-500 font-bold py-2 px-3 rounded text-sm" @click="closeDialog">
+                    <div class="flex gap-2 items-center">
+                        <i class="pi pi-times"/>
+                        <span>Close</span>
+                    </div>
+                </button>
             </template>
         </Dialog>
 </template>
+
