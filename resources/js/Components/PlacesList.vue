@@ -11,6 +11,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { usePage } from '@inertiajs/vue3';
 import { useToast } from 'primevue/usetoast';
+import PlaceInformationDialog from '@/Components/PlaceInformationDialog.vue';
 
 const toast = useToast();
 
@@ -24,6 +25,8 @@ const visitedOptions = [
     { name: 'Visited', value: 'visited' },
     { name: 'Not Visited', value: 'not_visited' },
 ];
+const selectedPlace = ref({});
+const isDialogVisible = ref(false);
 
 const isLoggedIn = computed(() => {
     const page = usePage();
@@ -154,9 +157,28 @@ function unvisit(index, feature) {
         });
 }
 
+function handleItemClick(feature) {
+  axios.get(`/features/id/${feature.id}`)
+    .then(response => {
+      selectedPlace.value = response.data;
+      isDialogVisible.value = true;
+    })
+    .catch(() => {
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: `Failed to get information about ${feature.name}.`,
+        life: 3000,
+      });
+    });
+}
+
+
+
 </script>
 
 <template>
+  <PlaceInformationDialog :visible="isDialogVisible" :place="selectedPlace" @update:visible="isDialogVisible = $event" />
   <div class="bg-white rounded border md:max-w-md w-full md:w-screen flex flex-col h-full">
     <div class="flex flex-row sticky top-0 z-10">
       <span class="p-input-icon-left w-full">
@@ -222,12 +244,13 @@ function unvisit(index, feature) {
       >
         <div class="flex items-center bg-white rounded-lg shadow-md border overflow-hidden hover:bg-surface-100 p-3">
           <img
-            class="h-20 w-20 object-cover rounded-lg opacity-60"
+            @click="handleItemClick(feature)"
+            class="h-20 w-20 object-cover rounded-lg opacity-60 cursor-pointer"
             src="/images/place-default-thumbnail.png"
             alt="Place"
           >
 
-          <div class="flex-grow p-2">
+          <div @click="handleItemClick(feature)" class="flex-grow p-2 cursor-pointer">
             <h3 class="font-semibold text-lg">
               {{ feature.name }}
             </h3>
