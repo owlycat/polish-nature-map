@@ -1,4 +1,6 @@
 import maplibregl from 'maplibre-gl';
+import { createApp } from 'vue';
+import Tooltip from './Tooltip.vue';
 
 export function filterPoints(map, ids){
     map.setFilter('natural-features-filter-match', ['in', 'id'].concat(ids));
@@ -6,7 +8,10 @@ export function filterPoints(map, ids){
 }
 
 function buildTooltip(place) {
-    return `<b>${place.name}</b>`;
+    const app = createApp(Tooltip, { place });
+    const div = document.createElement('div');
+    app.mount(div);
+    return div.outerHTML;
 }
 
 export function loadGeojsonFeatures(map, geojson, color) {
