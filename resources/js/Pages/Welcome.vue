@@ -10,11 +10,15 @@ const props = defineProps({
 });
 
 const map = ref(null);
+const coorinates = ref(null);
 
 function onDataUpdate(data) {
     map.value.filterMap(data);
 }
 
+const handleShowCoordinates = (coordinates) => {
+  coorinates.value = coordinates;
+};
 </script>
 
 <template>
@@ -24,12 +28,14 @@ function onDataUpdate(data) {
       <PlacesList
         :categories="props.categories"
         @filter:geojson="onDataUpdate"
+        @showCoordinates="handleShowCoordinates"
       />
     </div>
     <div class="w-full h-2/5 md:h-full">
       <Map
         ref="map"
         :geojson="props.geojson"
+        :coordinates="coorinates"
       />
     </div>
   </div>

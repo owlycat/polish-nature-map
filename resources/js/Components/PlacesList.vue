@@ -43,7 +43,7 @@ const props = defineProps({
     categories: Array,
 });
 
-const emit = defineEmits(['filter:geojson'])
+const emit = defineEmits(['filter:geojson', 'showCoordinates']);
 
 const search = () => {
     places.value = [];
@@ -173,12 +173,14 @@ function handleItemClick(feature) {
     });
 }
 
-
+const handleShowCoordinates = (coordinates) => {
+  emit('showCoordinates', coordinates);
+};
 
 </script>
 
 <template>
-  <PlaceInformationDialog :visible="isDialogVisible" :place="selectedPlace" @update:visible="isDialogVisible = $event" />
+  <PlaceInformationDialog :visible="isDialogVisible" :place="selectedPlace" @update:visible="isDialogVisible = $event" @showCoordinates="handleShowCoordinates" />
   <div class="bg-white rounded border md:max-w-md w-full md:w-screen flex flex-col h-full">
     <div class="flex flex-row sticky top-0 z-10">
       <span class="p-input-icon-left w-full">

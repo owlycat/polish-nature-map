@@ -2,14 +2,20 @@
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
+import { ref } from 'vue';
 
 import { defineProps, defineEmits } from 'vue';
 
-const { visible, place } = defineProps(['visible', 'place']);
+const props = defineProps(['visible', 'place']);
 const emit = defineEmits();
 
 const closeDialog = () => {
-  emit('update:visible', false);
+    emit('update:visible', false);
+};
+
+const emitCoordinates = () => {
+    emit('showCoordinates', props.place._geo);
+    emit('update:visible', false);
 };
 </script>
 
@@ -19,18 +25,18 @@ const closeDialog = () => {
             <template #header>
                 <div class="flex items-center justify-center gap-2">
                     <Avatar image="/images/place-default-thumbnail.png" shape="circle" />
-                    <span class="font-bold">{{ place.name }}</span>
+                    <span class="font-bold">{{ props.place.name }}</span>
                 </div>
             </template>
                 <p class="m-0">
-                        {{ place.description ? place.description : 'No description found' }}
+                        {{ props.place.description ? props.place.description : 'No description found' }}
                 </p>
-                <div class="mt-2 overflow-hidden overflow-ellipsis w-full" v-if="place.description_source">
+                <div class="mt-2 overflow-hidden overflow-ellipsis w-full" v-if="props.place.description_source">
                     <span class="font-bold">Source: </span>
-                    <a :href="place.description_source" target="_blank" class="overflow-ellipsis overflow-hidden">{{ decodeURI(place.description_source) }}</a>
+                    <a :href="props.place.description_source" target="_blank" class="overflow-ellipsis overflow-hidden">{{ decodeURI(props.place.description_source) }}</a>
                 </div>
                 <div class="flex mt-4 flex-wrap gap-2 items-center">
-                    <a :href="'https://www.google.com/search?q=' + place.name" target="_blank" class="border border-blue-500 hover:bg-blue-50 text-blue-500 font-semibold py-2 px-4 rounded">
+                    <a :href="'https://www.google.com/search?q=' + props.place.name" target="_blank" class="border border-blue-500 hover:bg-blue-50 text-blue-500 font-semibold py-2 px-4 rounded">
                         <div class="flex gap-2 items-center">
                             <i class="pi pi-google"/>
                             <span>Google more information</span>
@@ -39,13 +45,13 @@ const closeDialog = () => {
                 </div>
                 
             <template #footer>
-                <button type="button" class="mt-3 border border-emerald-500 bg-emerald-500 text-white font-bold py-2 px-3 rounded text-sm" @click="closeDialog">
+                <button type="button" class="mt-3 border border-emerald-500 hover:bg-emerald-600 bg-emerald-500 text-white font-bold py-2 px-3 rounded text-sm" @click="emitCoordinates">
                     <div class="flex gap-2 items-center">
                         <i class="pi pi-map-marker"/>
                         <span>Show on map</span>
                     </div>
                 </button>
-                <button type="button" class="mt-3 border border-emerald-500 text-emerald-500 font-bold py-2 px-3 rounded text-sm" @click="closeDialog">
+                <button type="button" class="mt-3 border border-emerald-500 hover:bg-emerald-50 text-emerald-500 font-bold py-2 px-3 rounded text-sm" @click="closeDialog">
                     <div class="flex gap-2 items-center">
                         <i class="pi pi-times"/>
                         <span>Close</span>
