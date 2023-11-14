@@ -85,7 +85,7 @@ class SpatialFeatureController extends Controller
     {
         $search = $filters['query'];
         $categories = $filters['categories'];
-
+        $visited = $filters['visited'];
         $results = SpatialFeature::search($search);
 
         if (! empty($categories)) {
@@ -99,12 +99,23 @@ class SpatialFeatureController extends Controller
     private function eloquentSearch($filters)
     {
         $categories = $filters['categories'];
+        $visited = $filters['visited'];
         $query = SpatialFeature::query();
 
         if (! empty($categories)) {
             $categoryIds = array_column($categories, 'id');
             $query->whereHas('category', function ($query) use ($categoryIds) {
                 $query->whereIn('id', $categoryIds);
+            });
+        }
+
+        if ($visited === 'visited') {
+            $query->whereHas('visitors', function ($query) {
+                $query->where('user_id', auth()->id());
+            });
+        } elseif ($visited === 'not_visited') {
+            $query->whereDoesntHave('visitors', function ($query) {
+                $query->where('user_id', auth()->id());
             });
         }
 
