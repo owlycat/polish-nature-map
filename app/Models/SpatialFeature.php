@@ -44,17 +44,10 @@ class SpatialFeature extends Model
     public function toSearchableArray(): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'category' => $this->category->name,
             'description' => $this->description,
-        ];
-    }
-
-    public function toFilterableArray(): array
-    {
-        return [
-            'name' => $this->name,
-            'category' => $this->category->name,
         ];
     }
 

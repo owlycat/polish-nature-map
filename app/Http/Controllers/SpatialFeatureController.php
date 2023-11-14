@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SpatialFeature;
+use App\Models\User;
 
 class SpatialFeatureController extends Controller
 {
@@ -93,6 +94,20 @@ class SpatialFeatureController extends Controller
             $results->whereIn('category', $categoryNames);
         }
 
+        if (! auth()->user()) {
+            return $results;
+        }
+
+        if ($visited === 'visited') {
+            $userId = auth()->id();
+            $visitedPlaceIds = User::find($userId)->visitedPlaces()->pluck('spatial_features.id')->toArray();
+            $results->whereIn('id', $visitedPlaceIds);
+        } elseif ($visited === 'not_visited') {
+            $userId = auth()->id();
+            $visitedPlaceIds = User::find($userId)->visitedPlaces()->pluck('spatial_features.id')->toArray();
+            $results->whereNotIn('id', $visitedPlaceIds);
+        }
+
         return $results;
     }
 
@@ -107,6 +122,10 @@ class SpatialFeatureController extends Controller
             $query->whereHas('category', function ($query) use ($categoryIds) {
                 $query->whereIn('id', $categoryIds);
             });
+        }
+
+        if (! auth()->user()) {
+            return $query;
         }
 
         if ($visited === 'visited') {
