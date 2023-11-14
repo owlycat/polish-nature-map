@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\Admin\RunImporters;
+use App\Actions\Admin\UpdateDescriptions;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ImporterFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,17 +30,34 @@ class ImporterController extends Controller
         ]);
     }
 
-    public function run(ImporterFormRequest $request): RedirectResponse
+    public function run(Request $request): RedirectResponse
     {
-        $selectedImporters = $request->validated()['importers'];
+        $importer = $request->input('importer');
+        $runImporters = new RunImporters();
+        $runImporters->runJobs([new $importer['class']()]);
 
-        $importers = [];
-        foreach ($selectedImporters as $selectedImporter) {
-            $importers[] = new $selectedImporter['class']();
+        return back();
+    }
+
+    public function runAll(): RedirectResponse
+    {
+        $importers = app('importer.registry');
+
+        $importerInstances = [];
+        foreach ($importers as $importerClass) {
+            $importerInstances[] = new $importerClass();
         }
 
         $runImporters = new RunImporters();
-        $runImporters->runJobs($importers);
+        $runImporters->runJobs($importerInstances);
+
+        return back();
+    }
+
+    public function updatePlacesDescriptions(): RedirectResponse
+    {
+        $updateDescriptions = new UpdateDescriptions();
+        $updateDescriptions->runUpdatePlacesDescriptionsJob();
 
         return back();
     }

@@ -4,8 +4,6 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
 
-import ColumnGroup from 'primevue/columngroup';   // optional
-import Row from 'primevue/row';
 import {ref} from "vue";                   // optional
 
 const categories = ref([
@@ -65,11 +63,7 @@ const editingRows = ref([]);
   <Layout header="Categories">
     <DataTable v-model:editingRows="editingRows" :value="categories" editMode="row" dataKey="id" @row-edit-save="onRowEditSave">
           <Column field="id" header="ID"></Column>
-          <Column field="name" header="Name">
-            <template #editor="{ data, field }">
-              <InputText v-model="data[field]" />
-            </template>
-          </Column>
+          <Column field="name" header="Name"></Column>
           <Column field="image" header="Image">
             <template #body="slotProps">
               <img :src="`${slotProps.data.image}`" :alt="slotProps.data.image" class="w-12" />
