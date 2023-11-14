@@ -6,50 +6,37 @@ import Map from '@/Components/Maplibre/Map.vue';
 
 const props = defineProps({
     geojson: JSON,
+    categories: Array,
 });
 
-const isListVisible = ref(true);
-
-const toggleListVisibility = () => {
-    isListVisible.value = !isListVisible.value;
-};
-
 const map = ref(null);
+const coorinates = ref(null);
 
 function onDataUpdate(data) {
     map.value.filterMap(data);
 }
 
+const handleShowCoordinates = (coordinates) => {
+  coorinates.value = coordinates;
+};
 </script>
 
 <template>
   <Head title="Welcome" />
   <div class="flex-grow overflow-y-auto h-screen flex md:flex-row flex-col-reverse">
-    <div :class="isListVisible ? 'h-3/5 md:h-full relative' : 'h-0'">
+    <div class="h-3/5 md:h-full relative">
       <PlacesList
-        v-show="isListVisible"
+        :categories="props.categories"
         @filter:geojson="onDataUpdate"
+        @show-coordinates="handleShowCoordinates"
       />
-      <button
-        v-show="isListVisible"
-        class="absolute top-0 right-0 m-4 md:hidden z-20"
-        @click="toggleListVisibility"
-      >
-        Hide List
-      </button>
     </div>
-    <div :class="isListVisible ? 'w-full h-2/5 md:h-full' : 'w-full h-full'">
+    <div class="w-full h-2/5 md:h-full">
       <Map
         ref="map"
         :geojson="props.geojson"
+        :coordinates="coorinates"
       />
     </div>
-    <button
-      v-show="!isListVisible"
-      class="fixed bottom-0 right-0 m-4 md:hidden"
-      @click="toggleListVisibility"
-    >
-      Show List
-    </button>
   </div>
 </template>

@@ -21,9 +21,10 @@ class WikipediaSearchHelper
             'action' => 'query',
             'titles' => $title,
             'format' => 'json',
-            'prop' => 'extracts',
+            'prop' => 'extracts|info',
             'explaintext' => 'true',
             'exintro' => true,
+            'inprop' => 'url',
         ];
 
         $response = $this->performRequest($params);
@@ -31,7 +32,13 @@ class WikipediaSearchHelper
         $data = json_decode($response->getBody(), true);
         $page = current($data['query']['pages']);
 
-        return isset($page['extract']) ? $page['extract'] : null;
+        $extract = isset($page['extract']) ? $page['extract'] : null;
+        $fullUrl = isset($page['fullurl']) ? $page['fullurl'] : null;
+
+        return [
+            'extract' => $extract,
+            'fullurl' => $fullUrl,
+        ];
     }
 
     protected function getSearchResults($query, $limit = 5)
@@ -66,12 +73,12 @@ class WikipediaSearchHelper
         return $bestMatch;
     }
 
-    public function query($query): ?string
+    public function query($query): ?array
     {
-        $exactMatchExtract = $this->getExtractByTitle($query);
+        $exactMatchData = $this->getExtractByTitle($query);
 
-        if (! empty($exactMatchExtract)) {
-            return $exactMatchExtract;
+        if (! empty($exactMatchData['extract'])) {
+            return $exactMatchData;
         }
 
         $searchResults = $this->getSearchResults($query);
@@ -86,8 +93,8 @@ class WikipediaSearchHelper
             return null;
         }
 
-        $extract = $this->getExtractByTitle($bestMatch['title']);
+        $extractData = $this->getExtractByTitle($bestMatch['title']);
 
-        return $extract;
+        return $extractData;
     }
 }

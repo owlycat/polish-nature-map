@@ -15,7 +15,6 @@ Route::group(['middleware' => [
     config('jetstream.auth_session'),
     Authorize::using(Permissions::VIEW_ADMIN_PANEL->value),
 ]], function () {
-
     Route::group(['middleware' => [Authorize::using(Permissions::VIEW_IMPORTERS->value)]], function () {
         Route::get('/admin/importers', [ImporterController::class, 'index'])->name('admin.importers.index');
         Route::post('/admin/importers/runAll', [ImporterController::class, 'runAll'])->name('admin.importers.runAll');
@@ -31,3 +30,16 @@ Route::group(['middleware' => [
     });
 }
 );
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::post('/visits/{placeId}', [VisitsController::class, 'visit']);
+    Route::delete('/visits/{placeId}', [VisitsController::class, 'unvisit']);
+});
+
+Route::get('/features/id/{id}', [SpatialFeatureController::class, 'show']);
+Route::get('/features/search', [SpatialFeatureController::class, 'search']);
+Route::get('/features/filterIds', [SpatialFeatureController::class, 'filterIds']);
