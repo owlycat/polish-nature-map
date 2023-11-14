@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VisitsController;
+use App\Http\Controllers\SpatialFeatureController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('index');
 
