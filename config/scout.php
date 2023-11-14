@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\SpatialFeature;
+
 return [
 
     'driver' => env('SCOUT_DRIVER', 'meilisearch'),
@@ -31,6 +33,9 @@ return [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY'),
         'index-settings' => [
+            SpatialFeature::class => [
+                'filterableAttributes' => ['id', 'category', 'name'],
+            ],
         ],
     ],
 

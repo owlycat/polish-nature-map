@@ -2,7 +2,7 @@ import maplibregl from 'maplibre-gl';
 
 export function filterPoints(map, ids){
     map.setFilter('natural-features-filter-match', ['in', 'id'].concat(ids));
-    map.setFilter('natural-features-filter-no-match', ['match', ['get', 'id'], ids, false, true]);
+    map.setFilter('natural-features-filter-no-match', ids.length > 0 ? ['match', ['get', 'id'], ids, false, true] : null);
 }
 
 function buildTooltip(place) {
@@ -45,7 +45,7 @@ export function loadGeojsonFeatures(map, geojson, color) {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const id = e.features[0].properties.id;
 
-        axios.get(`/api/features/id/${id}`).then(response => {
+        axios.get(`/features/id/${id}`).then(response => {
           const tooltip = buildTooltip(response.data);
           new maplibregl.Popup()
             .setLngLat(coordinates)

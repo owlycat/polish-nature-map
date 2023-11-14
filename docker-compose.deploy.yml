@@ -13,8 +13,8 @@ services:
       - ../config/deploy/supervisord.conf:/etc/supervisor/custom-supervisord.conf:ro
       - .:/application
     ports:
-      - ${DOCKER_APP_HOST_PORT:-80}:80
-      - 443:443
+      - "80:80"
+      - "443:443"
     networks:
       - nature-deploy-prod
     restart: unless-stopped
@@ -36,51 +36,40 @@ services:
     networks:
       - nature-deploy-prod
     ports:
-      - ${DOCKER_DEV_DB_EXTERNAL_PORT:-3306}:3306
+      - "3306"
     restart: unless-stopped
     healthcheck:
-      test:
-        - CMD
-        - mysqladmin
-        - ping
-        - '-p${DB_PASSWORD}'
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
       retries: 3
       timeout: 5s
-    
+
   redis:
     image: 'redis:alpine'
     ports:
-      - ${FORWARD_REDIS_PORT:-6379}:6379
+      - "6379"
     volumes:
       - nature-deploy-redis-data:/data
     networks:
       - nature-deploy-prod
     restart: unless-stopped
     healthcheck:
-      test:
-        - CMD
-        - redis-cli
-        - ping
+      test: ["CMD", "redis-cli", "ping"]
       retries: 3
       timeout: 5s
 
   meilisearch:
     image: 'getmeili/meilisearch:latest'
     ports:
-      - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
+      - "7700"
     environment:
       MEILI_NO_ANALYTICS: '${MEILISEARCH_NO_ANALYTICS:-false}'
+      MEILI_MASTER_KEY: '${MEILISEARCH_KEY}'
     volumes:
       - 'nature-deploy-meilisearch-data:/meili_data'
     networks:
       - nature-deploy-prod
     healthcheck:
-      test:
-        - CMD
-        - wget
-        - '--no-verbose'
-        - '--spider'
-        - 'http://localhost:7700/health'
+      test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:7700/health"]
       retries: 3
       timeout: 5s
 
@@ -98,8 +87,8 @@ services:
       SOKETI_DB_REDIS_PORT: ${SOKETI_DB_REDIS_PORT:-6379}
       SOKETI_DB_REDIS_DB: ${SOKETI_DB_REDIS_DB:-0}
     ports:
-      - '${SOKETI_PORT:-6001}:${SOKETI_PORT:-6001}'
-      - '${SOKETI_METRICS_SERVER_PORT:-9601}:${SOKETI_METRICS_SERVER_PORT:-9601}'
+      - "6001:6001"
+      - "9601"
     depends_on:
       - redis
     networks:
@@ -110,7 +99,7 @@ networks:
     driver: bridge
     external: false
     name: nature-deploy-prod
-    
+
 volumes:
   nature-deploy-mysql-data:
     name: nature-deploy-mysql-data

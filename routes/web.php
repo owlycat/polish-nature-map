@@ -2,6 +2,8 @@
 
 use App\Enums\Permissions;
 use App\Http\Controllers\Admin\ImporterController;
+use App\Http\Controllers\SpatialFeatureController;
+use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
@@ -33,3 +35,16 @@ Route::group(['middleware' => [
     });
 }
 );
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::post('/visits/{placeId}', [VisitsController::class, 'visit']);
+    Route::delete('/visits/{placeId}', [VisitsController::class, 'unvisit']);
+});
+
+Route::get('/features/id/{id}', [SpatialFeatureController::class, 'show']);
+Route::get('/features/search', [SpatialFeatureController::class, 'search']);
+Route::get('/features/filterIds', [SpatialFeatureController::class, 'filterIds']);
