@@ -34,9 +34,15 @@ class UpdatePlacesDescriptionsJob implements ShouldQueue
         foreach ($spatialFeatures as $spatialFeature) {
             $data = $wikipediaSearch->query($spatialFeature->name);
 
-            $spatialFeature->description = $data;
+            if ($data !== null) {
+                $description = $data['extract'];
+                $sourceLink = $data['fullurl'];
 
-            $spatialFeature->save();
+                $spatialFeature->description = $description;
+                $spatialFeature->description_source = $sourceLink;
+
+                $spatialFeature->save();
+            }
         }
     }
 }

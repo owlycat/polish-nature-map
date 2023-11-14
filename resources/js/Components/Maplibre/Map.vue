@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue';
+import { ref, onMounted, onBeforeUnmount, defineProps, watch } from 'vue';
 import { addControls } from './Partials/mapControls.js';
 import { loadGeojsonFeatures, filterPoints } from './Partials/geojsonFeatures.js';
 import ProgressSpinner from 'primevue/progressspinner';
@@ -13,6 +13,7 @@ const map = ref(null);
 
 const props = defineProps({
     geojson: Object,
+    coordinates: Object,
 });
 
 const filterMap = (ids) => {
@@ -69,6 +70,15 @@ const destroyMap = () => {
 
 onBeforeUnmount(() => {
     destroyMap();
+});
+
+watch(() => props.coordinates, (coordinates) => {
+    if (coordinates) {
+        map.value.flyTo({
+            center: coordinates,
+            zoom: 9,
+        });
+    }
 });
 </script>
 
