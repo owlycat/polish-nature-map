@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\SpatialFeature;
 
 class VisitsController extends Controller
@@ -12,33 +10,33 @@ class VisitsController extends Controller
     {
         $place = SpatialFeature::find($placeId);
 
-        if (!$place) {
-            return response()->json(['message' => 'Place not found', "severity" => "info", "title" => "Info"], 404);
+        if (! $place) {
+            return response()->json(['message' => 'Place not found', 'severity' => 'info', 'title' => 'Info'], 404);
         }
 
         $user = auth()->user();
         $visitors = $place->visitors()->get();
 
         if ($visitors->contains($user->id)) {
-            return response()->json(['message' => 'You have already visited this place', "severity" => "info", "title" => "Info"], 200);
+            return response()->json(['message' => 'You have already visited this place', 'severity' => 'info', 'title' => 'Info'], 200);
         }
 
         $place->visitors()->attach($user->id);
 
-        return response()->json(['message' => 'Place visited successfully', "severity" => "success", "title" => "Success"], 200);
+        return response()->json(['message' => 'Place visited successfully', 'severity' => 'success', 'title' => 'Success'], 200);
     }
 
     public function unvisit($placeId)
     {
         $place = SpatialFeature::find($placeId);
 
-        if (!$place) {
-            return response()->json(['message' => 'Place not found', "severity" => "success", "title" => "Info"], 404);
+        if (! $place) {
+            return response()->json(['message' => 'Place not found', 'severity' => 'success', 'title' => 'Info'], 404);
         }
 
         $user = auth()->user();
         $place->visitors()->detach($user->id);
 
-        return response()->json(['message' => 'Place unvisited successfully', "severity" => "info", "title" => "Info"], 200);
+        return response()->json(['message' => 'Place unvisited successfully', 'severity' => 'info', 'title' => 'Info'], 200);
     }
 }

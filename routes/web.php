@@ -2,9 +2,9 @@
 
 use App\Enums\Permissions;
 use App\Http\Controllers\Admin\ImporterController;
-use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\SpatialFeatureController;
+use App\Http\Controllers\VisitsController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;

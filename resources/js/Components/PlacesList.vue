@@ -123,7 +123,7 @@ function visit(index, feature) {
                 life: 3000,
             });
         })
-        .catch(error => {
+        .catch(() => {
             toast.add({
                 severity: 'error',
                 summary: 'Error',
@@ -144,7 +144,7 @@ function unvisit(index, feature) {
                 life: 3000,
             });
         })
-        .catch(error => {
+        .catch(() => {
             toast.add({
                 severity: 'error',
                 summary: 'Error',
@@ -237,8 +237,23 @@ function unvisit(index, feature) {
           </div>
 
           <div>
-            <Button v-if="feature.visited" @click="unvisit(featureIndex, feature)" icon="pi pi-bookmark" severity="success" rounded aria-label="Mark unvisited" />
-            <Button v-else icon="pi pi-bookmark" @click="visit(featureIndex, feature)" outlined severity="secondary" rounded aria-label="Mark visited" />
+            <Button
+              v-if="feature.visited"
+              icon="pi pi-bookmark"
+              severity="success"
+              rounded
+              aria-label="Mark unvisited"
+              @click="unvisit(featureIndex, feature)"
+            />
+            <Button
+              v-else
+              icon="pi pi-bookmark"
+              outlined
+              severity="secondary"
+              rounded
+              aria-label="Mark visited"
+              @click="visit(featureIndex, feature)"
+            />
           </div>
         </div>
       </div>

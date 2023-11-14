@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Builder;
 
 class SpatialFeature extends Model
 {
@@ -61,6 +60,6 @@ class SpatialFeature extends Model
 
     protected function makeAllSearchableUsing($query)
     {
-        return $query->with("category");
+        return $query->with('category');
     }
 }
