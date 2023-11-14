@@ -6,10 +6,9 @@ defineProps({
 
 <template>
     <div class="flex flex-col gap-2">
-        <div class="flex gap-2 items-center">
-            <span class="flex justify-left font-semibold">{{ place.name }}</span>
-            <div class="flex justify-right gap-2">
-                <i class="pi pi-info-circle" @click="openModal"/>
+        <div class="flex gap-2 items-center justify-between">
+            <span class="flex font-semibold">{{ place.name }}</span>
+            <div class="flex gap-2">
                 <a class="pi pi-map-marker" target="_blank" :href="`https://www.google.com/maps/place/${place._geo[1]},${place._geo[0]}/@${place._geo[1]},${place._geo[0]},9z`"/>
             </div>
         </div>
