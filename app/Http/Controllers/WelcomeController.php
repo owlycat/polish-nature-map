@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Geojson\GetAllFeatures;
 use App\Models\Category;
-use App\Models\SpatialFeature;
 use Inertia\Inertia;
 
 class WelcomeController extends Controller
@@ -11,26 +11,8 @@ class WelcomeController extends Controller
     public function index()
     {
         return Inertia::render('Welcome', [
-            'geojson' => fn () => $this->getGeojson(),
+            'geojson' => fn () => (new GetAllFeatures())->getGeojson(),
             'categories' => fn () => Category::all(['name', 'id']),
         ]);
-    }
-
-    private function getGeojson(): array
-    {
-        $featureCollection = SpatialFeature::query()
-            ->get()
-            ->map(fn ($feature) => [
-                'type' => 'Feature',
-                'properties' => ['id' => $feature->id],
-                'id' => $feature->id,
-                'geometry' => [
-                    'type' => 'Point',
-                    'coordinates' => $feature->_geo,
-                ],
-            ])
-            ->toArray();
-
-        return ['type' => 'FeatureCollection', 'features' => $featureCollection];
     }
 }

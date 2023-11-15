@@ -3,6 +3,9 @@
 use App\Enums\Permissions;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ImporterController;
+use App\Http\Controllers\PersonalMapController;
+use App\Http\Controllers\SpatialFeatureController;
+use App\Http\Controllers\VisitsController;
 use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
@@ -41,6 +44,15 @@ Route::middleware([
     Route::post('/visits/{placeId}', [VisitsController::class, 'visit']);
     Route::delete('/visits/{placeId}', [VisitsController::class, 'unvisit']);
 });
+
+Route::middleware([
+    'auth:sanctum',
+])->group(function () {
+    Route::get('/map/me', [PersonalMapController::class, 'me'])->name('map.me');
+    Route::put('/share', [PersonalMapController::class, 'share'])->name('map.share');
+});
+
+Route::get('/map/{name}', [PersonalMapController::class, 'show'])->name('map');
 
 Route::get('/features/id/{id}', [SpatialFeatureController::class, 'show']);
 Route::get('/features/search', [SpatialFeatureController::class, 'search']);

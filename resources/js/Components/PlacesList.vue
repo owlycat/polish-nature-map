@@ -6,12 +6,12 @@ import ProgressSpinner from 'primevue/progressspinner';
 import MultiSelect from 'primevue/multiselect';
 import SelectButton from 'primevue/selectbutton';
 import 'v3-infinite-loading/lib/style.css';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import _ from 'lodash';
 import axios from 'axios';
-import { usePage } from '@inertiajs/vue3';
 import { useToast } from 'primevue/usetoast';
 import PlaceInformationDialog from '@/Components/PlaceInformationDialog.vue';
+import { router, usePage } from '@inertiajs/vue3'
 
 const toast = useToast();
 
@@ -31,6 +31,14 @@ const isDialogVisible = ref(false);
 const isLoggedIn = computed(() => {
     const page = usePage();
     return page.props.auth.user !== null;
+});
+
+watch(isLoggedIn, (newValue, oldValue) => {
+    if (!newValue && oldValue) {
+        places.value.forEach(place => {
+            place.visited = false;
+        });
+    }
 });
 
 const hasFilters = computed(() => {
@@ -126,7 +134,10 @@ function visit(index, feature) {
                 life: 3000,
             });
         })
-        .catch(() => {
+        .catch(error => {
+            if (error.response.status === 401) {
+                router.get('login')
+            }
             toast.add({
                 severity: 'error',
                 summary: 'Error',
