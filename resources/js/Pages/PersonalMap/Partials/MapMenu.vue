@@ -3,10 +3,14 @@ import InputText from 'primevue/inputtext';
 import SelectButton from 'primevue/selectbutton';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
-import { ref, computed } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { usePage, useForm } from '@inertiajs/vue3';
 import TotalsPanel from './TotalsPanel.vue';
 import Avatar from 'primevue/avatar';
+import InputError from '@/Components/InputError.vue';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
 
 const props = defineProps({
     categories: Array,
@@ -33,13 +37,40 @@ function getPrivacyOption() {
     if (props.personalMap.is_public) {
         return privacyOptions[0];
     }
-    
+
     return privacyOptions[1];
 }
 
-const privacySelection = ref(getPrivacyOption());
-const newShareableName = ref(props.personalMap.name ?? '');
+const form = useForm({
+    privacy: getPrivacyOption(),
+    name: props.personalMap.name ?? '',
+    personal_map_id: props.personalMap.id,
+});
 
+const submitForm = () => {
+    form.put(route('map.share'), {
+        errorBag: 'mapShare',
+        preserveScroll: true,
+    })
+};
+
+const getLink = async () => {
+    try {
+        await navigator.clipboard.writeText(route('map', { name: props.personalMap.name }));
+        toast.add({
+            severity: 'success',
+            summary: 'Link copied to clipboard',
+            life: 3000,
+        });
+    } catch (err) {
+        toast.add({
+            severity: 'error',
+            summary: 'Failed to copy link',
+            detail: err.message,
+            life: 3000,
+        });
+    }
+};
 </script>
 <template>
   <div class="bg-white rounded border md:max-w-md w-full md:w-screen flex flex-col h-full">
@@ -61,21 +92,30 @@ const newShareableName = ref(props.personalMap.name ?? '');
         header="Share Settings"
       >
         <p class="text-sm">
-          Share your map with others by setting a shareable name and making it public.
+          Share your map with others by setting a shareable link name and making it public.
         </p>
-        <div class="flex pt-2">
-          <span class="p-input-icon-left w-full">
-            <i class="pi pi-pencil" />
-            <InputText
-              v-model="newShareableName"
-              class="w-full"
-              placeholder="Shareable name"
+        <div class="flex flex-col pt-2">
+          <div class="flex">
+            <span class="p-input-icon-left w-full">
+              <i class="pi pi-pencil" />
+              <InputText
+                v-model="form.name"
+                class="w-full"
+                placeholder="Shareable name"
+              />
+            </span>
+            <Button
+              :disabled="!props.personalMap.is_public"
+              aria-labelledby="Share link"
+              icon="pi pi-link"
+              @click="getLink()"
             />
-          </span>
+          </div>
+          <InputError :message="form.errors.name" />
         </div>
         <div class="flex justify-between pt-4">
           <SelectButton
-            v-model="privacySelection"
+            v-model="form.privacy"
             :allow-empty="false"
             :options="privacyOptions"
             option-label="name"
@@ -83,6 +123,8 @@ const newShareableName = ref(props.personalMap.name ?? '');
           />
           <Button
             label="Apply"
+            type="submit"
+            @click="submitForm"
           />
         </div>
       </Panel>

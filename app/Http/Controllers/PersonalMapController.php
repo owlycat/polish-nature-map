@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PersonalMapShareRequest;
 use App\Models\Category;
 use App\Models\PersonalMap;
 use App\Models\SpatialFeature;
@@ -22,7 +23,7 @@ class PersonalMapController extends Controller
         }
 
         return Inertia::render('PersonalMap/Show', [
-            'personalMap' => fn () => $personalMap,
+            'personalMap' => $personalMap,
             'displayInfo' => fn () => $this->getDisplayedInformation($user, $personalMap),
         ]);
     }
@@ -40,9 +41,22 @@ class PersonalMapController extends Controller
         }
 
         return Inertia::render('PersonalMap/Show', [
-            'personalMap' => fn () => $personalMap,
+            'personalMap' => $personalMap,
             'displayInfo' => fn () => $this->getDisplayedInformation($personalMap->user, $personalMap),
         ]);
+    }
+
+    public function share(PersonalMapShareRequest $request)
+    {
+        $personalMap = auth()->user()->personalMap;
+
+        $personalMap->update([
+            'is_public' => $request->input('privacy.value') === 'public',
+            'name' => $request->input('name'),
+        ]);
+        $personalMap->save();
+
+        return Inertia::location(url()->previous());
     }
 
     private function countPerCategory($visitedFeatures)

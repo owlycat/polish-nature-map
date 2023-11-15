@@ -50,6 +50,7 @@ Route::middleware([
     'auth:sanctum',
 ])->group(function () {
     Route::get('/map/me', [PersonalMapController::class, 'me'])->name('map.me');
+    Route::put('/share', [PersonalMapController::class, 'share'])->name('map.share');
 });
 
 Route::get('/map/{name}', [PersonalMapController::class, 'show'])->name('map');
