@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SpatialFeature;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller
 {
@@ -29,7 +29,7 @@ class StatisticsController extends Controller
         $place = SpatialFeature::withCount('visitors')
             ->orderBy('visitors_count', 'desc')
             ->first();
-    
+
         return "{$place->name}, {$place->visitors_count}";
     }
 

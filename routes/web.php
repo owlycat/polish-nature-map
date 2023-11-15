@@ -3,15 +3,13 @@
 use App\Enums\Permissions;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ImporterController;
+use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\PersonalMapController;
 use App\Http\Controllers\SpatialFeatureController;
 use App\Http\Controllers\VisitsController;
-use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VisitsController;
-use App\Http\Controllers\SpatialFeatureController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('index');
 
