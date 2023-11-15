@@ -27,6 +27,8 @@ Route::group(['middleware' => [
 
     Route::group(['middleware' => [Authorize::using(Permissions::VIEW_CATEGORIES->value)]], function () {
         Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+        Route::put('/admin/categories/{category}', [CategoryController::class, 'update'])->name('admin.categories.update');
+        Route::post('/admin/categories/{category}', [CategoryController::class, 'uploadImage'])->name('admin.categories.uploadImage');
     });
     Route::group(['middleware' => [Authorize::using(Permissions::VIEW_STATISTICS->value)]], function () {
         Route::get('/admin/statistics', [StatisticsController::class, 'index'])->name('admin.statistics.index');
