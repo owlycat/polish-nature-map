@@ -10,7 +10,7 @@ class PersonalMapNoMeNameRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if ($value === 'me') {
-            $fail("The {$value} is already in use.");
+            $fail("The {$attribute} is already in use.");
         }
     }
 }
