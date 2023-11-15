@@ -5,6 +5,7 @@ import { useToast } from 'primevue/usetoast';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
+const permissions = computed(() => page.props.auth.permissions);
 const toast = useToast();
 const mobileMenuOpen = ref(false);
 
@@ -42,7 +43,7 @@ const endMenuItems = computed(() => [
         label: 'Admin Panel',
         icon: 'pi pi-user-edit',
         justify: 'start',
-        visible: user.value !== null,
+        visible: permissions.value.includes('view admin panel'),
         disabled: route().current('admin.*'),
         route: '/admin/importers',
       },
@@ -53,6 +54,14 @@ const endMenuItems = computed(() => [
         visible: user.value != null,
         disabled: route().current('map.me'),
         route: '/map/me',
+      },
+      {
+        label: 'Register',
+        icon: 'pi pi-user-plus',
+        justify: 'end',
+        visible: user.value == null,
+        disabled: route().current('register'),
+        route: '/register',
       },
       {
         label: 'Log In',
