@@ -1,6 +1,6 @@
 <script setup>
 import Button from "primevue/button";
-import Card from "primevue/card";
+import ImporterCard from "./ImporterCard.vue";
 import {router} from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -23,17 +23,13 @@ const updateDescriptions = () => {
 <template>
   <div class="flex flex-col gap-4">
     <span class="text-lg font-semibold">List of all importers</span>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <Card v-for="importer in availableImporters" :key="importer.name">
-        <template #title>{{ importer.name }}</template>
-        <template #content>
-          <Button label="Run importer" size="small"  @click="runImporter(importer)"/>
-        </template>
-      </Card>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <ImporterCard/>
+      
     </div>
     <div class="flex justify-end gap-2">
-      <Button label="Run all importers" size="small" @click="runAllImporters" />
-      <Button label="Update missing descriptions" size="small" @click="updateDescriptions" />
+      <Button label="Run all importers" icon="pi pi-play" size="small" @click="runAllImporters" />
+      <Button label="Update descriptions" icon="pi pi-refresh" size="small" @click="updateDescriptions" />
     </div>
   </div>
 </template>
