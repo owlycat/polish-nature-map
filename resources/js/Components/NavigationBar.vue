@@ -47,6 +47,14 @@ const endMenuItems = computed(() => [
         route: '/admin',
       },
       {
+        label: 'My Map',
+        icon: 'pi pi-bookmark',
+        justify: 'end',
+        visible: user.value != null,
+        disabled: route().current('map.me'),
+        route: '/map/me',
+      },
+      {
         label: 'Log In',
         icon: 'pi pi-sign-in',
         justify: 'end',
