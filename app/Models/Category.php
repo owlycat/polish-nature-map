@@ -12,6 +12,8 @@ class Category extends Model
 
     protected $fillable = [
         'name',
+        'display_name',
+        'image',
     ];
 
     public function spatialFeatures(): HasMany

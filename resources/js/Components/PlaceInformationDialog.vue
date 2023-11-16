@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(
-    ['update:visible', 'showCoordinates'],
+    ['update:visible', 'goToPlace'],
 );
 
 const closeDialog = () => {
@@ -18,7 +18,7 @@ const closeDialog = () => {
 };
 
 const emitCoordinates = () => {
-    emit('showCoordinates', props.place._geo);
+    emit('goToPlace', props.place.id, props.place._geo);
     emit('update:visible', false);
 };
 </script>
@@ -35,10 +35,14 @@ const emitCoordinates = () => {
     <template #header>
       <div class="flex items-center justify-center gap-2">
         <Avatar
-          image="/images/place-default-thumbnail.png"
+          :image="place.category.image ? '/storage/images/' + place.category.image : '/images/place-default-thumbnail.png'"
           shape="circle"
+          class="aspect-square"
         />
-        <span class="font-bold">{{ props.place.name }}</span>
+        <div class="flex flex-col">
+          <span class="font-bold">{{ props.place.name }}</span>
+          <span class="text-sm">{{ props.place.category.display_name }}</span>
+        </div>
       </div>
     </template>
     <p class="m-0">

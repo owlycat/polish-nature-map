@@ -11,6 +11,10 @@ class SpatialFeatureController extends Controller
     {
         $feature = SpatialFeature::findOrFail($id);
 
+        $feature->load(['category' => function ($query) {
+            $query->select('id', 'display_name', 'image');
+        }]);
+
         return $feature;
     }
 
@@ -25,6 +29,8 @@ class SpatialFeatureController extends Controller
             return [
                 'id' => $item->id,
                 'category_name' => $item->category->name,
+                'category_display_name' => $item->category->display_name,
+                'category_image' => $item->category->image,
                 'name' => $item->name,
                 'visited' => $user ? $user->hasVisited($item->id) : false,
             ];

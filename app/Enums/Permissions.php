@@ -8,6 +8,9 @@ enum Permissions: string
     case RUN_IMPORTERS = 'run importers';
     case VIEW_IMPORTERS = 'view importers';
 
+    case VIEW_CATEGORIES = 'view categories';
+    case VIEW_STATISTICS = 'view statistics';
+
     public static function getAllValues(): array
     {
         return array_column(Permissions::cases(), 'value');

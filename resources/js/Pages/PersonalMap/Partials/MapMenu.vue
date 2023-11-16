@@ -138,7 +138,7 @@ const getLink = async () => {
         :key="index"
       >
         <TotalsPanel
-          :label="category.name"
+          :label="category.display_name ? category.display_name : category.name"
           :value="category.visited"
           :max="category.total"
         />

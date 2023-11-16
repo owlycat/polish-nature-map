@@ -12,7 +12,7 @@ class WelcomeController extends Controller
     {
         return Inertia::render('Welcome', [
             'geojson' => fn () => (new GetAllFeatures())->getGeojson(),
-            'categories' => fn () => Category::all(['name', 'id']),
+            'categories' => fn () => Category::all(['name', 'display_name', 'id']),
         ]);
     }
 }

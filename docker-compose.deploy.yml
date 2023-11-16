@@ -12,6 +12,7 @@ services:
       - ../config/deploy/php-fpm.conf:/usr/local/etc/php-fpm.d/zzz-overrides.conf:ro
       - ../config/deploy/supervisord.conf:/etc/supervisor/custom-supervisord.conf:ro
       - .:/application
+      - /etc/letsencrypt:/etc/nginx/ssl
     ports:
       - "80:80"
       - "443:443"

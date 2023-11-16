@@ -1,44 +1,32 @@
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
-import Button from 'primevue/button';
-import MultiSelect from 'primevue/multiselect';
-import InputError from '@/Components/InputError.vue';
+import Layout from '@/Pages/Admin/Layout.vue';
+import ImporterList from '@/Pages/Admin/Partials/ImporterList.vue';
+import JobStatus from '@/Pages/Admin/Partials/JobStatus.vue';
+import TelescopeLogo from '@/Pages/Admin/Partials/TelescopeLogo.vue';
 
-const props = defineProps({
-    availableImporters: Array,
+defineProps({
+  availableImporters: Array,
+  statuses: Object,
 });
-
-const form = useForm({
-    importers: [],
-});
-
-const runImporters = () => {
-    form.put(route('admin.importers.run'), {
-        errorBag: 'runImporters',
-        preserveScroll: true,
-    });
-};
-
 </script>
-<template>
-  <Head title="Import Features" />
 
-  <div>
-    <Button
-      label="Import"
-      @click="runImporters"
-    />
-    <MultiSelect
-      v-model="form.importers"
-      option-label="name"
-      placeholder="Select Importers"
-      :options="props.availableImporters"
-    />
-    <template
-      v-for="error in form.errors"
-      :key="error"
-    >
-      <InputError :message="error" />
-    </template>
-  </div>
+<template>
+  <Layout header="Importers">
+    <div class="flex flex-col gap-4">
+      <ImporterList :available-importers="availableImporters" />
+      <JobStatus :statuses="statuses" />
+      <div class="flex gap-2 items-center justify-end">
+        <span>More detailed logs:</span>
+        <a
+          href="/telescope"
+          target="_blank"
+        >
+          <div class="flex gap-1 items-center">
+            <TelescopeLogo class="w-5" />
+            <span class="text-indigo-700 font-medium">Laravel Telescope</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </Layout>
 </template>
