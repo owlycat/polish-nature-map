@@ -27,10 +27,11 @@ Echo.channel('importer-status')
 
 
         const importerCard = importerCards.value.find(importerCard => importerCard.getClass() === importerClass);
-        importerCard.setStatus(status);
-        importerCard.setTimeMessage(timestamp)
+        if (importerCard) {
+            importerCard.setStatus(status);
+            importerCard.setTimeMessage(timestamp);
+        }
     });
-
 </script>
 
 <template>
