@@ -12,9 +12,7 @@ const props = defineProps({
     categories: Array,
 });
 
-
 const onRowEditSave = (event) => {
-  console.log(event.newData);
   router.put(route('admin.categories.update', event.data.id), event.newData);
 };
 
