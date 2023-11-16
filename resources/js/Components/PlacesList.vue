@@ -51,7 +51,7 @@ const props = defineProps({
     categories: Array,
 });
 
-const emit = defineEmits(['filter:geojson', 'showCoordinates']);
+const emit = defineEmits(['filter:geojson', 'goToPlace']);
 
 const search = () => {
     places.value = [];
@@ -184,8 +184,8 @@ function handleItemClick(feature) {
     });
 }
 
-const handleShowCoordinates = (coordinates) => {
-  emit('showCoordinates', coordinates);
+const handleGoToPlace = (id, coordinates) => {
+  emit('goToPlace', id, coordinates);
 };
 
 function getMultiSelectOptionLabel(option) {
@@ -198,7 +198,7 @@ function getMultiSelectOptionLabel(option) {
     :visible="isDialogVisible"
     :place="selectedPlace"
     @update:visible="isDialogVisible = $event"
-    @show-coordinates="handleShowCoordinates"
+    @go-to-place="handleGoToPlace"
   />
   <div class="bg-white rounded border md:max-w-md w-full md:w-screen flex flex-col h-full">
     <div class="flex flex-row sticky top-0 z-10">

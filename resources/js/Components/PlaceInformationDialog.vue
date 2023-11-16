@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(
-    ['update:visible', 'showCoordinates'],
+    ['update:visible', 'goToPlace'],
 );
 
 const closeDialog = () => {
@@ -18,7 +18,7 @@ const closeDialog = () => {
 };
 
 const emitCoordinates = () => {
-    emit('showCoordinates', props.place._geo);
+    emit('goToPlace', props.place.id, props.place._geo);
     emit('update:visible', false);
 };
 </script>
