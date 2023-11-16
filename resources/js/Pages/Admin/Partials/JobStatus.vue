@@ -4,6 +4,12 @@ import DataTable from "primevue/datatable";
 import InlineMessage from 'primevue/inlinemessage';
 import { ref } from "vue";
 
+const props = defineProps({
+    statuses: Object,
+});
+
+const jobStatuses = ref(props.statuses);
+
 Echo.channel(`importer-status`)
     .listen('UpdateImporterJobStatus', (e) => {
         const importerClass = e.importer;
@@ -13,13 +19,12 @@ Echo.channel(`importer-status`)
         jobStatuses.value.unshift({
             job_name: importerClass,
             job_status: status,
-            timestamp: timestamp
+            job_timestamp: timestamp
         });
 
         jobStatuses.value = jobStatuses.value.slice(0, 20);
     });
 
-const jobStatuses = ref([]);
 const getSeverity = (job) => {
     switch (job.job_status) {
         case 'success':
@@ -43,7 +48,7 @@ const getSeverity = (job) => {
             <InlineMessage :severity="getSeverity(slotProps.data)" class="h-9">{{ slotProps.data.job_status }}</InlineMessage>
         </template>
     </Column>
-    <Column field="timestamp" header="Timestamp"></Column>
+    <Column field="job_timestamp" header="Timestamp"></Column>
   </DataTable>
   <span class="text-sm">(Showing max of 20 last jobs)</span>
   </div>

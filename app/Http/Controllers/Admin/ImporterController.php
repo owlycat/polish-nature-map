@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\ImporterStatus;
 
 class ImporterController extends Controller
 {
@@ -18,15 +19,28 @@ class ImporterController extends Controller
         $importers = app('importer.registry');
 
         foreach ($importers as $importer) {
+            $importerStatus = ImporterStatus::where('job_name', $importer)->latest()->first();
+            $status = 'not_run';
+            $timestamp = "Never";
+
+            if ($importerStatus) {
+                $status = $importerStatus->job_status;
+                $timestamp = $importerStatus->job_timestamp;
+            }
+
             $availableImporters[] = [
                 'name' => (new $importer())->getCategoryName(),
                 'class' => $importer,
-                'status' => '???',
+                'status' => $status,
+                'timestamp' => $timestamp
             ];
         }
 
+        $importerStatuses = ImporterStatus::orderBy('job_timestamp', 'desc')->take(20)->get();
+
         return Inertia::render('Admin/Importers', [
             'availableImporters' => $availableImporters,
+            'statuses' => $importerStatuses
         ]);
     }
 

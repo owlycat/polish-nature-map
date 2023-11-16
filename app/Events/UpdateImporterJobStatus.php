@@ -9,18 +9,34 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use App\Models\ImporterStatus;
 
 class UpdateImporterJobStatus implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public string $importer;
+    public string $status;
+    public string $timestamp;
+
     /**
      * Create a new event instance.
      */
     public function __construct(
-        private GeojsonFeaturesImporter $importer,
-        private ImporterStatuses $status)
+        GeojsonFeaturesImporter $importer,
+        ImporterStatuses $status)
     {
+        $this->importer = $importer::class;
+        $this->status = $status->value;
+        $this->timestamp = now()->format('Y-m-d H:i:s');
+
+        ImporterStatus::create(
+            [
+            'job_name' => $this->importer,
+            'job_status' => $this->status,
+            'job_timestamp' => $this->timestamp
+            ]
+        );
     }
 
     /**
@@ -34,14 +50,4 @@ class UpdateImporterJobStatus implements ShouldBroadcastNow
             new Channel('importer-status'),
         ];
     }
-
-    public function broadcastWith(): array
-    {
-        return [
-            'importer' => $this->importer::class,
-            'status' => $this->status->value,
-            'timestamp' => now()->format('Y-m-d H:i:s'),
-        ];
-    }
-
 }

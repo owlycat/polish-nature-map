@@ -6,6 +6,7 @@ import TelescopeLogo from "@/Pages/Admin/Partials/TelescopeLogo.vue";
 
 const props = defineProps({
   availableImporters: Array,
+  statuses: Object,
 });
 </script>
 
@@ -13,7 +14,7 @@ const props = defineProps({
   <Layout header="Importers">
     <div class="flex flex-col gap-4">
       <ImporterList :availableImporters="availableImporters" />
-      <JobStatus />
+      <JobStatus :statuses="statuses" />
       <div class="flex gap-2 items-center justify-end">
         <span>More detailed logs:</span>
           <a href="/telescope" target="_blank">

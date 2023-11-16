@@ -7,22 +7,14 @@ import {router} from "@inertiajs/vue3";
 
 const props = defineProps({
   importer: Object,
-  status: {
-    type: String,
-    default: 'wait'
-  },
-  timeMessage: {
-    type: String,
-    default: 'Unknown'
-  }
 });
 
 function getClass() {
   return props.importer.class;
 }
 
-const statusState = ref(props.status);
-const timeState = ref(props.timeMessage);
+const statusState = ref(props.importer.status);
+const timeState = ref(props.importer.timestamp);
 
 function setStatus(status) {
     statusState.value = status;
@@ -63,7 +55,7 @@ const blockButton = computed(() => {
   return statusState.value === 'success';
 });
 
-const runImporter = (importer) => {
+const runImporter = () => {
   router.post(route('admin.importers.run'), { importer: props.importer });
 };
 
