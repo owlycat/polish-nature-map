@@ -39,7 +39,7 @@ const messageText = computed(() => {
     case 'running': return 'Running';
     case 'success': return 'Success';
     case 'failed': return 'Failed';
-    case 'not_run': return 'Never run';
+    case 'not_run': return 'Never launched';
     default: return '';
   }
 });
@@ -54,7 +54,7 @@ const messageSeverity = computed(() => {
 });
 
 const blockButton = computed(() => {
-  return statusState.value === 'success';
+  return statusState.value === 'success' || statusState.value === 'not_run';
 });
 
 const runImporter = () => {
