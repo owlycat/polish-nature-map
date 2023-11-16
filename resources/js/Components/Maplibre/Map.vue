@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, defineProps, watch } from 'vue';
 import { addControls } from './Partials/mapControls.js';
-import { loadGeojsonFeatures, filterPoints } from './Partials/geojsonFeatures.js';
+import { loadGeojsonFeatures, filterPoints, showTooltip } from './Partials/geojsonFeatures.js';
 import ProgressSpinner from 'primevue/progressspinner';
 
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -20,8 +20,12 @@ const filterMap = (ids) => {
     filterPoints(map.value, ids);
 };
 
+const showTooltipOnMap = (id, coordinates) => {
+    showTooltip(map.value, id, coordinates);
+};
+
 defineExpose({
-    filterMap,
+    filterMap, showTooltipOnMap
 })
 
 const LoadingStates = {

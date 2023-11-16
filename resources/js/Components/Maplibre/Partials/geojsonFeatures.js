@@ -14,6 +14,19 @@ function buildTooltip(place) {
     return div.outerHTML;
 }
 
+export function showTooltip(map, id, coordinates) {
+    const tooltips = document.querySelectorAll('.maplibregl-popup');
+    tooltips.forEach(tooltip => tooltip.remove());
+
+    axios.get(`/features/id/${id}`).then(response => {
+        const tooltip = buildTooltip(response.data);
+        new maplibregl.Popup()
+          .setLngLat(coordinates)
+          .setHTML(tooltip)
+          .addTo(map);
+      });
+}
+
 export function loadGeojsonFeatures(map, geojson, color) {
     const ids = geojson.features.map(feature => feature.properties.id);
     map.addSource('all', {
@@ -50,12 +63,6 @@ export function loadGeojsonFeatures(map, geojson, color) {
         const coordinates = e.features[0].geometry.coordinates.slice();
         const id = e.features[0].properties.id;
 
-        axios.get(`/features/id/${id}`).then(response => {
-          const tooltip = buildTooltip(response.data);
-          new maplibregl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(tooltip)
-            .addTo(map);
-        });
+        showTooltip(map, id, coordinates);
       });
 }

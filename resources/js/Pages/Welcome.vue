@@ -18,6 +18,7 @@ function onDataUpdate(data) {
 
 const handleGoToPlace = (id, coords) => {
   coordinates.value = coords;
+  map.value.showTooltipOnMap(id, coords);
 };
 </script>
 
