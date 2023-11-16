@@ -30,7 +30,7 @@ class StatisticsController extends Controller
             ->orderBy('visitors_count', 'desc')
             ->first();
 
-        if(!$place) {
+        if (! $place) {
             return 'No visits yet';
         }
 
