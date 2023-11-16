@@ -39,6 +39,7 @@ const messageText = computed(() => {
     case 'running': return 'Running';
     case 'success': return 'Success';
     case 'failed': return 'Failed';
+    case 'not_run': return 'Never run';
     default: return '';
   }
 });
@@ -47,6 +48,7 @@ const messageSeverity = computed(() => {
   switch (statusState.value) {
     case 'success': return 'success';
     case 'failed': return 'error';
+    case 'not_run': return 'warn';
     default: return 'info';
   }
 });

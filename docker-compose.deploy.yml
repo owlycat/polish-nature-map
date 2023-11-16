@@ -75,10 +75,13 @@ services:
       timeout: 5s
 
   soketi:
-    image: 'quay.io/soketi/soketi:latest-16-alpine'
+    image: 'quay.io/soketi/soketi:1.4-16-debian'
     command: ['soketi', 'start']
+    volumes:
+      - /etc/letsencrypt:/etc/nginx/ssl
     environment:
       SOKETI_DEBUG: '1'
+      SOKETI_PORT: ${PUSHER_PORT}
       SOKETI_METRICS_SERVER_PORT: ${SOKETI_METRICS_SERVER_PORT:-9601}
       SOKETI_DEFAULT_APP_ID: ${PUSHER_APP_ID}
       SOKETI_DEFAULT_APP_KEY: ${PUSHER_APP_KEY}
@@ -87,8 +90,10 @@ services:
       SOKETI_DB_REDIS_PASSWORD: ${SOKETI_DB_REDIS_PASSWORD}
       SOKETI_DB_REDIS_PORT: ${SOKETI_DB_REDIS_PORT:-6379}
       SOKETI_DB_REDIS_DB: ${SOKETI_DB_REDIS_DB:-0}
+      SOKETI_SSL_CERT: ${SOKETI_SSL_CERT}
+      SOKETI_SSL_KEY: ${SOKETI_SSL_KEY}
     ports:
-      - "6001:6001"
+      - "${PUSHER_PORT}:${PUSHER_PORT}"
       - "9601"
     depends_on:
       - redis
