@@ -188,6 +188,9 @@ const handleShowCoordinates = (coordinates) => {
   emit('showCoordinates', coordinates);
 };
 
+function getMultiSelectOptionLabel(option) {
+  return option.display_name ? option.display_name : option.name;
+}
 </script>
 
 <template>
@@ -224,7 +227,7 @@ const handleShowCoordinates = (coordinates) => {
           id="categories"
           v-model="selectedCategories"
           class="w-full"
-          option-label="name"
+          :option-label="getMultiSelectOptionLabel"
           placeholder="Select Categories"
           :max-selected-labels="1"
           :options="props.categories"
@@ -262,8 +265,8 @@ const handleShowCoordinates = (coordinates) => {
       >
         <div class="flex items-center bg-white rounded-lg shadow-md border overflow-hidden hover:bg-surface-100 p-3">
           <img
-            class="h-20 w-20 object-cover rounded-lg opacity-60 cursor-pointer"
-            src="/images/place-default-thumbnail.png"
+            class="h-20 w-20 object-cover rounded-lg cursor-pointer"
+            :src="feature.category_image ? '/storage/images/' + feature.category_image : '/images/place-default-thumbnail.png'"
             alt="Place"
             @click="handleItemClick(feature)"
           >
@@ -276,7 +279,7 @@ const handleShowCoordinates = (coordinates) => {
               {{ feature.name }}
             </h3>
             <p class="text-sm text-gray-600">
-              {{ feature.category_name }}
+              {{ feature.category_display_name ? feature.category_display_name : feature.category_name }}
             </p>
           </div>
 

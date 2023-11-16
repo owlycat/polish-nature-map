@@ -68,6 +68,7 @@ class PersonalMapController extends Controller
             return [
                 'id' => $category->id,
                 'name' => $category->name,
+                'display_name' => $category->display_name,
                 'visited' => $visited,
                 'total' => $total,
             ];
