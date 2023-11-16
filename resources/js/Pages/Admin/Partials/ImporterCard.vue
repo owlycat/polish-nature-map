@@ -3,7 +3,7 @@ import Card from 'primevue/card';
 import InlineMessage from 'primevue/inlinemessage';
 import Button from 'primevue/button';
 import { computed, defineExpose, ref } from 'vue';
-import {router} from "@inertiajs/vue3";
+import {router} from '@inertiajs/vue3';
 
 const props = defineProps({
   importer: Object,
@@ -62,17 +62,30 @@ const runImporter = () => {
 </script>
 
 <template>
-
-<Card>
-    <template #title> {{ importerName }} </template>
+  <Card>
+    <template #title>
+      {{ importerName }}
+    </template>
     <template #subtitle>
-        <div class="flex justify-between items-center flex-wrap">
-            <span>{{ timeMessage }}</span>
-            <InlineMessage :severity="messageSeverity" class="h-9">{{ messageText }}</InlineMessage>
-        </div>
+      <div class="flex justify-between items-center flex-wrap">
+        <span>{{ timeMessage }}</span>
+        <InlineMessage
+          :severity="messageSeverity"
+          class="h-9"
+        >
+          {{ messageText }}
+        </InlineMessage>
+      </div>
     </template>
     <template #content>
-        <Button :disabled="! blockButton" @click="runImporter" class="w-full" label="Run importer" icon="pi pi-sync" size="small"  />
+      <Button
+        :disabled="! blockButton"
+        class="w-full"
+        label="Run importer"
+        icon="pi pi-sync"
+        size="small"
+        @click="runImporter"
+      />
     </template>
-</Card>
+  </Card>
 </template>

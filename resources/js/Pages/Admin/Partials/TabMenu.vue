@@ -1,11 +1,9 @@
 <script setup>
 import { computed } from 'vue';
-import { Link, router, usePage } from '@inertiajs/vue3';
-import { useToast } from 'primevue/usetoast';
+import { Link, usePage } from '@inertiajs/vue3';
 
 const page = usePage();
 const user = computed(() => page.props.auth.user);
-const toast = useToast();
 
 const menuItems = computed(() => [
   {
@@ -36,12 +34,15 @@ const menuItems = computed(() => [
   <nav class="flex justify-between items-center bg-surface-a p-2">
     <div class="flex gap-2 pl-2 sm:gap-10 sm:pl-10 items-center">
       <div class="flex md:gap-3 flex-wrap items-center justify-center gap-2">
-        <template v-for="item in menuItems" :key="item.label">
+        <template
+          v-for="item in menuItems"
+          :key="item.label"
+        >
           <Link
-              v-if="item.visible"
-              :href="item.route"
-              :class="{'border-b-2 border-primary': item.disabled}"
-              class="flex items-center px-2 py-1 sm:px-3 sm:py-2 hover:border-b-2"
+            v-if="item.visible"
+            :href="item.route"
+            :class="{'border-b-2 border-primary': item.disabled}"
+            class="flex items-center px-2 py-1 sm:px-3 sm:py-2 hover:border-b-2"
           >
             <i :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>

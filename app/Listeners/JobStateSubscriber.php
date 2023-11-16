@@ -2,12 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Enums\ImporterStatuses;
 use App\Events\UpdateImporterJobStatus;
+use App\Jobs\RunImporterJob;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Queue\Events\JobQueued;
-use App\Enums\ImporterStatuses;
-use App\Importers\GeojsonFeaturesImporter;
-use App\Jobs\RunImporterJob;
 use Illuminate\Support\Facades\Queue;
 
 class JobStateSubscriber

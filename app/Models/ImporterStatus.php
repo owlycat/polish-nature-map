@@ -12,6 +12,6 @@ class ImporterStatus extends Model
     protected $fillable = [
         'job_name',
         'job_status',
-        'job_timestamp'
+        'job_timestamp',
     ];
 }

@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Actions\Admin\RunImporters;
 use App\Actions\Admin\UpdateDescriptions;
 use App\Http\Controllers\Controller;
+use App\Models\ImporterStatus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\ImporterStatus;
 
 class ImporterController extends Controller
 {
@@ -21,7 +21,7 @@ class ImporterController extends Controller
         foreach ($importers as $importer) {
             $importerStatus = ImporterStatus::where('job_name', $importer)->latest()->first();
             $status = 'not_run';
-            $timestamp = "Never";
+            $timestamp = 'Never';
 
             if ($importerStatus) {
                 $status = $importerStatus->job_status;
@@ -32,7 +32,7 @@ class ImporterController extends Controller
                 'name' => (new $importer())->getCategoryName(),
                 'class' => $importer,
                 'status' => $status,
-                'timestamp' => $timestamp
+                'timestamp' => $timestamp,
             ];
         }
 
@@ -40,7 +40,7 @@ class ImporterController extends Controller
 
         return Inertia::render('Admin/Importers', [
             'availableImporters' => $availableImporters,
-            'statuses' => $importerStatuses
+            'statuses' => $importerStatuses,
         ]);
     }
 

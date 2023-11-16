@@ -8,11 +8,10 @@ defineProps({
 </script>
 
 <template>
-
-    <TabMenu />
-    <div class="max-w-7xl mx-auto w-full sm:py-10 sm:px-6 lg:px-8">
-      <Panel :header="header">
-        <slot />
-      </Panel>
-    </div>
+  <TabMenu />
+  <div class="max-w-7xl mx-auto w-full sm:py-10 sm:px-6 lg:px-8">
+    <Panel :header="header">
+      <slot />
+    </Panel>
+  </div>
 </template>

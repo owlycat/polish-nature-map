@@ -25,18 +25,18 @@ const runImporters = () => {
 
   <div>
     <Button
-        label="Import"
-        @click="runImporters"
+      label="Import"
+      @click="runImporters"
     />
     <MultiSelect
-        v-model="form.importers"
-        option-label="name"
-        placeholder="Select Importers"
-        :options="props.availableImporters"
+      v-model="form.importers"
+      option-label="name"
+      placeholder="Select Importers"
+      :options="props.availableImporters"
     />
     <template
-        v-for="error in form.errors"
-        :key="error"
+      v-for="error in form.errors"
+      :key="error"
     >
       <InputError :message="error" />
     </template>

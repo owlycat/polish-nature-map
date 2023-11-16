@@ -4,19 +4,21 @@ namespace App\Events;
 
 use App\Enums\ImporterStatuses;
 use App\Importers\GeojsonFeaturesImporter;
+use App\Models\ImporterStatus;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
-use App\Models\ImporterStatus;
 
 class UpdateImporterJobStatus implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public string $importer;
+
     public string $status;
+
     public string $timestamp;
 
     /**
@@ -32,9 +34,9 @@ class UpdateImporterJobStatus implements ShouldBroadcastNow
 
         ImporterStatus::create(
             [
-            'job_name' => $this->importer,
-            'job_status' => $this->status,
-            'job_timestamp' => $this->timestamp
+                'job_name' => $this->importer,
+                'job_status' => $this->status,
+                'job_timestamp' => $this->timestamp,
             ]
         );
     }
