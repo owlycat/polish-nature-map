@@ -9,6 +9,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Events\UpdateImporterJobStatus;
+use App\Enums\ImporterStatuses;
+use Throwable;
 
 class RunImporterJob implements ShouldBeUnique, ShouldQueue
 {
@@ -23,11 +26,23 @@ class RunImporterJob implements ShouldBeUnique, ShouldQueue
 
     public function handle(): void
     {
+        UpdateImporterJobStatus::dispatch($this->importer, ImporterStatuses::RUNNING);
         $this->importer->run();
+        UpdateImporterJobStatus::dispatch($this->importer, ImporterStatuses::SUCCESS);
+    }
+
+    public function getImporter(): GeojsonFeaturesImporter
+    {
+        return $this->importer;
     }
 
     public function uniqueId(): string
     {
         return 'RunImporterJob-'.$this->importer->getCategoryName();
+    }
+
+    public function failed(Throwable $exception): void
+    {
+        UpdateImporterJobStatus::dispatch($this->importer, ImporterStatuses::FAILED);
     }
 }

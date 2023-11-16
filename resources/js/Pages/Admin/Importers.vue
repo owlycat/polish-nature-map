@@ -3,7 +3,6 @@ import Layout from "@/Pages/Admin/Layout.vue";
 import ImporterList from "@/Pages/Admin/Partials/ImporterList.vue";
 import JobStatus from "@/Pages/Admin/Partials/JobStatus.vue";
 import TelescopeLogo from "@/Pages/Admin/Partials/TelescopeLogo.vue";
-import Button from 'primevue/button';
 
 const props = defineProps({
   availableImporters: Array,
