@@ -54,7 +54,7 @@ const messageSeverity = computed(() => {
 });
 
 const blockButton = computed(() => {
-  return statusState.value === 'success';
+  return statusState.value === 'success' || statusState.value === 'not_run';
 });
 
 const runImporter = () => {
