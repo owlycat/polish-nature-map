@@ -2,12 +2,25 @@
 ## Overview
 This web application allows users to track visited national parks and other protected areas in Poland, using data sourced from the Web Feature Service from the General Directorate for Environmental Protection.
 
+<div align="center">
+  <a href="https://github.com/owlycat/polish-nature-map/assets/49527545/5186dd9e-4ccc-4f38-a4fc-53f3f649aed5">
+    <img src="https://github.com/owlycat/polish-nature-map/assets/49527545/5186dd9e-4ccc-4f38-a4fc-53f3f649aed5" alt="Polish Nature Map" style="max-width:100%; height:auto;">
+  </a>
+</div>
+
 ### Features
 - Browse parks and other protected areas
 - Track visited places
 - Interact with a map and view information about places
 - Share a link with your visited places
 - Run importing jobs as administrator
+
+<div align="center">
+  <a href="https://github.com/owlycat/polish-nature-map/assets/49527545/42ed18a7-b975-481c-bc9e-2d357e4cdb9e">
+    <img src="https://github.com/owlycat/polish-nature-map/assets/49527545/42ed18a7-b975-481c-bc9e-2d357e4cdb9e" alt="Interactive Map Example" style="max-width:100%; height:auto;">
+  </a>
+</div>
+
 - View statistical data
 
 ### Tech stack
